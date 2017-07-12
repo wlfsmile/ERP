@@ -1,0 +1,10 @@
+META-INF
+WEB-INF
+.vscode
+.svn
+*.bak
+node_modules
+npm-debug.log
+.DS_Store
+.csv
+WebRoot/
