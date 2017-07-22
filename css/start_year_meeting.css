@@ -292,12 +292,15 @@ dl dd span{
 	height: 50px;
 	background-color: #355A86;
 	color: #fff;
-	font-size: 24px;
-	font-family: "微软雅黑";
 	font-weight: bolder;
 	line-height: 50px;
-	text-align: center;
+	text-align: center; 
 	border-radius: 10px 10px 0 0;
+}
+.addTitle{
+	margin-left: 30px;
+	font-size: 24px;
+	font-family: "微软雅黑";
 }
 .addCancel{
 	float: right;

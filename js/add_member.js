@@ -33,9 +33,9 @@ $(function(){
 	$('.tab_td3').click(function(){
 		var str = '';
 		str =   '<div class="addBox">'+
-					'<div class="addBox_title">添加成员<span class="addCancel">×</span></div>'+
+					'<div class="addBox_title"><span class="addTitle">添加成员<span><span class="addCancel">×</span></div>'+
 					'<div class="addBox_content">'+
-					    '<form class="memberInfo_i" method="post" name="formDada" enctype="multipart/form-data">'+
+					    '<form class="memberInfo_i" method="post" name="formDada">'+
 							'<p>'+
 							    '队员姓名：<input name="name" type="text" class="name" />'+
 					 		'</p>'+
@@ -77,14 +77,17 @@ $(function(){
 			$('.memberInfo').append(addMemberStr);
 			// 点击删除成员
 			$('.btn_remove').click(function(){
-				$(this).parent(".memberInfo_i").remove();
+				if (confirm("确定要删除此成员？")) {
+					$(this).parent(".memberInfo_i").remove();
+				}
 			})
 		})
 
-		//点击保存添加
+		//点击保存添加 成员信息传给后台数据库
 		$(".btn_keep").click(function(){
 			var memberMessageList = [];
-			var memberLen = $(".memberInfo_i").length;
+			var memberLen = $(".memberInfo_i").length;  //计算成员数组长度
+			// 将每个成员信息添加到memberMessageList里面
 			for(var i=0;i<memberLen;i++){
 				var name = $("input[name='name']").eq(i).val();
 				var schoolId = $("input[name='schoolId']").eq(i).val();
@@ -92,17 +95,19 @@ $(function(){
 				var memberMessageItem = {"name":name,"schoolId":schoolId,"post":post};
 				memberMessageList.push(memberMessageItem);
 			}
-			if(confrim("确定添加该组成员？")){
+			if(confirm("确定添加该组成员？")){
 				$.ajax({
 					url : "/memberMessageAction!addMemberMessage.action",
 					type : "POST",
 					data : {
 						memberMessageList : memberMessageList
 					},
-					success : function(data){
-						alert(data.message);					
+					success : function(data){   //请求成功
+						console.log(data);  //打印出后台返回数据
+						alert(data.message); 
+						window.location.reload();  //页面自动重新加载					
 					},
-					error : function(){
+					error : function(){   //请求失败
 						alert("请求失败");
 					}
 				})
