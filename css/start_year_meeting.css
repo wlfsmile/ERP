@@ -347,6 +347,7 @@ dl dd span{
 	margin-left: 30px;
 }
 .memberInfo_i{
+	display: block;
 	margin-top: 20px;
 	border-top: 1px #355A86 solid;
 }
