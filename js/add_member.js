@@ -1,37 +1,50 @@
 $(function(){
-	// 请求队长信息
-	/*var str='';
+	// 请求已有队员信息
+	var str='';
 	$.ajax({
-		url : "http://rapapi.org/mockjsdata/22245/leaderInfo",
-		type : "GET",
+		url : "http://rapapi.org/mockjsdata/22944/memberMessageAction!findAllInOneTeam.action",
+		type : "POST",
+		data : {
+			userUnique : "1"
+		},
 		success : function(data){
-			str =   '<div class="addBox">'+
-						'<div class="addBox_title">添加成员<span class="addCancel">×</span></div>'+
-						'<div class="addBox_content">'+
-						    '<p>'+
-						        '队长姓名：<input name="name" type="text" value="'+ data.name +'" readonly="readonly"  /> '+
-						    '</p>'+
-						    '<p>'+
-						        '学号：<input name="schoolId" type="text" value="'+ data.schoolId +'" readonly="readonly"  /> '+
-						    '</p>'+
-						    '<p>'+
-						        '职务：<input name="post" type="text" value="'+ data.post +'" readonly="readonly"  /> '+
-						    '</p>'+
-						    '<div class="memberInfo">'+
-						    '</div>'+
-						    '<button class="btn btn_next">添加成员</button>'+
-						    '<button class="btn btn_keep">保存添加</button>'+
-					    '</div>'+	
-				    '</div>';
+			if(data.code == 1){
+				var memberData = data.memberMessages;
+				for(var i=0;i<memberData.length;i++){
+					var memberDataStr = '<div class="">'+
+										'<p>'+
+									        '队员姓名：<input name="name" type="text" value="'+ memberData.memberName +'" readonly="readonly"  /> '+
+									    '</p>'+
+									    '<p>'+
+									        '学号：<input name="schoolId" type="text" value="'+ memberData.memberStuId +'" readonly="readonly"  /> '+
+									    '</p>'+
+									    '<p>'+
+									        '职务：<input name="post" type="text" value="'+ memberData.memberRole +'" readonly="readonly"  /> '+
+									    '</p>'+
+									    '<p>'+
+									    	'贡献度：<input name="score" type="text" value="'+ memberData.finalScore +'" readonly="readonly"  /> '+
+									    '</p>';
+				}
+				str =   '<div class="addBox">'+
+							'<div class="addBox_title">添加成员<span class="addCancel">×</span></div>'+
+							'<div class="addBox_content">'+
+						
+							    '<div class="memberInfo">'+
+							    '</div>'+
+							    '<button class="btn btn_next">添加成员</button>'+
+							    '<button class="btn btn_keep">保存添加</button>'+
+						    '</div>'+	
+					    '</div>';
+			}
 		},
 		error : function(){
 			alert("请求失败");
 		}
-	})*/
+	})
 
 	// 点击头像添加成员
 	$('.tab_td3').click(function(){
-		var str = '';
+		/*var str = '';
 		str =   '<div class="addBox">'+
 					'<div class="addBox_title"><span class="addTitle">添加成员<span><span class="addCancel">×</span></div>'+
 					'<div class="addBox_content">'+
@@ -52,7 +65,7 @@ $(function(){
 					    '<button class="btn btn_next">添加成员</button>'+
 					    '<button class="btn btn_keep">保存添加</button>'+
 				    '</div>'+	
-			    '</div>';
+			    '</div>';*/
 		$('.addMember').html(str);
 
 		// 点击x
@@ -95,6 +108,7 @@ $(function(){
 				var memberMessageItem = {"name":name,"schoolId":schoolId,"post":post};
 				memberMessageList.push(memberMessageItem);
 			}
+			console.log(memberMessageList);
 			if(confirm("确定添加该组成员？")){
 				$.ajax({
 					url : "/memberMessageAction!addMemberMessage.action",
@@ -104,7 +118,7 @@ $(function(){
 					},
 					success : function(data){   //请求成功
 						console.log(data);  //打印出后台返回数据
-						alert(data.message); 
+						alert(data.result); 
 						window.location.reload();  //页面自动重新加载					
 					},
 					error : function(){   //请求失败
