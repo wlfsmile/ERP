@@ -42,12 +42,6 @@ window.onload = function () {
         _this.contribute($(this));
       })
 
-      this.$table.on('click','.sure-contribute',function(e){
-        //点击确认
-        e.preventDefault();
-        _this.sureContribute($(this));
-      })
-
       // 结束经营
       this.$table.on('click', '.gameover', function (e) {
         e.preventDefault();
@@ -457,7 +451,7 @@ window.onload = function () {
                         '</div>';
           //$('#box').append(tableStr);
           //如果未确认，有取消和确定按钮
-          if(res.confirm == 1){
+          if(res.confirm == 0){
             DIALOG.confirm(tableStr,function(){
 
             },'json');
@@ -470,11 +464,6 @@ window.onload = function () {
           }
         }
       })
-    },
-
-    //点击确认
-    sureContribute : function(the){
-      alert(1);
     }
   };
 
