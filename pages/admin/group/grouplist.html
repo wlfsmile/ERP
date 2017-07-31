@@ -6,6 +6,7 @@
     <title>ERP虚拟运营系统后台管理</title>
     <link rel="stylesheet" href="../common/iconfont/iconfont.css">
     <link rel="stylesheet" type="text/css" href="../common/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="./css/grouplist_box.css">
     <style type="text/css">
         .toggle span{
             font-size: 16px;
@@ -55,9 +56,9 @@
         <li>
           <a href="grouplist.html" class="active"><i class="iconfont">&#xe832;</i>管理分组</a>
         </li>
-        <li>
-          <a href="contribution.html" ><i>&#xe845;</i>贡献率设计</a>
-        </li>
+       <!--  <li>
+         <a href="contribution.html" ><i>&#xe845;</i>贡献率设计</a>
+       </li> -->
         <li>
           <a href="../assess/assess.html"><i class="iconfont">&#xe60b;</i>企业评价</a>
         </li>
@@ -87,22 +88,27 @@
                 <table class="tableStyle" id="table">
                     <tr id="theader">
                         <th></th>
-                        <th>组名</th>
-                        <th>组长</th>
-                        <th>组员数</th>
-                        <th>年数</th>
-                        <th>季度数</th>
-                        <th>当前时间</th>
+                        <th>比赛名称</th>
+                        <th>比赛创建人</th>
+                        <th>企业数</th>
+                        <th>比赛时长（年）</th>
+                        <!-- <th>季度数</th> -->
+                        <th>当前期数</th>
                         <th>操作</th>
                     </tr>
                     <tr>
-                        <td colspan="8"><span class="icon-spin5">请稍候，数据加载中...</span></td>
+                        <td colspan="7"><span class="icon-spin5">请稍候，数据加载中...</span></td>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
     <!--main-wrapper end-->
+</div>
+
+<!-- 弹出框 -->
+<div id="box">
+  
 </div>
 <!--content end-->
 <script type="text/javascript" src="../common/js/jquery-1.9.1.min.js"></script>

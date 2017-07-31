@@ -36,6 +36,18 @@ window.onload = function () {
         _this.addHistory($(this));
       });
 
+      this.$table.on('click','.contribute',function(e){
+        //确认贡献度
+        e.preventDefault();
+        _this.contribute($(this));
+      })
+
+      this.$table.on('click','.sure-contribute',function(e){
+        //点击确认
+        e.preventDefault();
+        _this.sureContribute($(this));
+      })
+
       // 结束经营
       this.$table.on('click', '.gameover', function (e) {
         e.preventDefault();
@@ -174,11 +186,12 @@ window.onload = function () {
                    '<td>' + trdata.groupCreaterId + '</td>' +
                    '<td>' + trdata.userNumbers + '</td>' +
                    '<td>' + trdata.years + '</td>' +
-                   '<td>' + trdata.periodsOfOneYear + '</td>' +
+                   /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                    '<td>' + trdata.currentPeriod + '</td>' +
                       '<td>' +
                       '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
+                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a></br>' +
+                      '<a href="#" class="contribute"><span class="icon-contribute"></span>学生贡献度确认</a>'+
                       '</td></tr>';
             option.table.append(tr1);
             option.table.append(tr2);
@@ -223,11 +236,12 @@ window.onload = function () {
                        '<td>' + trdata.groupCreaterId + '</td>' +
                        '<td>' + trdata.userNumbers + '</td>' +
                        '<td>' + trdata.years + '</td>' +
-                       '<td>' + trdata.periodsOfOneYear + '</td>' +
+                       /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                        '<td>' + trdata.currentPeriod + '</td>' +
                           '<td>' +
                           '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
                           '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
+                          '<a href="#" class="contribute"><span class="icon-history"></span>学生贡献度确认</a>'+
                           '</td></tr>';
             option.table.append(tr1);
             option.table.append(tr2);
@@ -404,6 +418,63 @@ window.onload = function () {
           }
         }, 'json');
       });
+
+    },
+
+    contribute:function(the){ //确认学生贡献度
+      var _this = this;
+      var tr = the.closest('tr');
+      var groupName = tr.attr('data-name');
+      var groupname = tr.find('.groupname').text();
+      var data = {
+        groupName: groupName
+      };
+      $.post('http://rapapi.org/mockjsdata/22245/contribute',data,function(res){
+        var contributeStr = '';
+        var len = res.table.length;
+        var resData = res.table;
+        if(res.code == 1){
+          for(var i=0;i<len;i++){
+            contributeStr +=  '<tr>'+
+                                '<td>'+resData[i].name+'</td>'+
+                                '<td>'+resData[i].post+'</td>'+
+                                '<td>'+resData[i].studentNo+'</td>'+
+                                '<td>'+resData[i].studentName+'</td>'+
+                                '<td><input type="text" class="table-contribute" value="'+resData[i].contribute+'" /></td>'+
+                              '</tr>';
+          }
+          var tableStr ='<div>'+ 
+                          '<table border="1" cellspacing="0" cellpadding="0" class="box-table" >'+
+                            '<tr>'+
+                              '<td>企业名称</td>'+
+                              '<td>职务</td>'+
+                              '<td>学号</td>'+
+                              '<td>姓名</td>'+
+                              '<td class="table-td-contribute">贡献度</td>'+
+                            '</tr>'+
+                            contributeStr+
+                          '</table>'+
+                        '</div>';
+          //$('#box').append(tableStr);
+          //如果未确认，有取消和确定按钮
+          if(res.confirm == 1){
+            DIALOG.confirm(tableStr,function(){
+
+            },'json');
+            /*var buttonStr = '<button class="sure-contribute box-btn">确定</button>'+
+                            '<button class="cancel-contribute box-btn">取消</button>';*/
+            //$('.box-table').append(buttonStr);
+          }else{  //否则不可改贡献度
+            DIALOG.confirm0(tableStr);
+            $('.table-contribute').attr('disabled',true);
+          }
+        }
+      })
+    },
+
+    //点击确认
+    sureContribute : function(the){
+      alert(1);
     }
   };
 

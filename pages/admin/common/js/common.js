@@ -291,6 +291,23 @@ var DIALOG = null;
 		confirmDialog.open();
 	}
 
+	Dialog.confirm0 = function(message,cancel){
+		var content = '<div class="ui-dialog-bd">' + message + '</div>';
+		content += '<div class="dialog-footer"><button class="btn j_cancel" href="#">取消</button></div>';
+		var confirmDialog = new DIALOG({
+			className : 'ui-dialog-confirm',
+			width : '450px',
+			content : content,
+			cache : false,
+			closeBtn : false
+		});
+		confirmDialog.$root.on('click', '.btn', function(e) {
+			e.preventDefault();
+			confirmDialog.close();
+		});
+		confirmDialog.open();
+	}
+
 	DIALOG = Dialog;
 })();
 

@@ -2,22 +2,20 @@ $(function(){
 
 	//请求所有成员信息
 	$.ajax({
-		url : "http://rapapi.org/mockjsdata/22944/memberMessageAction!findAllInOneTeam.action",
+		url : "/erpm/memberDetailAction!findAllInOneTeam.action",
 		type : "POST",
-		data : {
-			userUnique:1
-		},
+		dataType:"json",
 		success : function(data){
 			if (data.code == 1) {
-				var memberData = data.memberMessages;
+				var memberData = data.memberDetails;
 				var memberStr = '';
 				var len = memberData.length;
 				for(var i=0;i<len;i++){
 					memberStr += '<tr>'+
-					  				'<td class="memberStuId">'+ memberData[i].memberStuId +'</td>'+
-					  				'<td class="memberName">'+ memberData[i].memberName +'</td>'+
-					  				'<td class="memberRole">'+ memberData[i].memberRole +'</td>'+
-					  				'<td class="memberScore">'+ memberData[i].memberScore +'</td>'+
+					  				'<td class="memberStuId">'+ memberData[i].studentNo +'</td>'+
+					  				'<td class="memberName">'+ memberData[i].studentName +'</td>'+
+					  				'<td class="memberRole">'+ memberData[i].title +'</td>'+
+					  				'<td class="memberScore">'+ memberData[i].grade +'</td>'+
 					  				'<td><span class="memberChange">修改</span><span class="memberDel">删除</span></td>'+
 					  			'</tr>'
 				}
@@ -61,8 +59,9 @@ $(function(){
 						var changeform = new FormData(document.getElementById("changeForm"));
 						console.log($("#changeForm").serialize());
 						$.ajax({
-							url : "/memberMessageAction!updateMemberMessage.action",
+							url : "/erpm/memberDetailAction!updateMemberMessage.action",
 							type : "POST",
+							dataType:"json",
 							processData: false,
 							data :changeform,
 							success : function(data){   //请求成功
@@ -70,6 +69,8 @@ $(function(){
 									console.log(data);  //打印出后台返回数据
 									alert(data.result); 
 									window.location.reload();  //页面自动重新加载
+								}else{
+									alert(data.result);
 								}				
 							},
 							error : function(){   //请求失败
@@ -82,21 +83,22 @@ $(function(){
 
 				//点击删除
 				$(".memberDel").click(function(){
-					var memberName = $(this).parent().siblings().eq(1).text(); //获取成员姓名
-					console.log(memberName);
+					var studentNo = $(this).parent().siblings().eq(0).text(); //获取成员学号
 					if (confirm("确认删除此成员？")) {
 						$.ajax({
-							url : "/memberMessageAction!deleteMemberMessage.action",
+							url : "/erpm/memberDetailAction!deleteMemberDetail.action",
 							type : "POST",
+							dataType:"json",
 							data : {
-								memberName : memberName,
-								userUnique : memberData.userUnique
+								"studentNo" : studentNo
 							},
 							success : function(data){
 								if (data.code == 1) {
 									alert(data.result);
 									window.location.reload();  //页面自动重新加载	
-								}
+								}else{
+									alert(data.result);
+								}	
 							},
 							error : function(){
 								alert("请求失败");
@@ -104,6 +106,8 @@ $(function(){
 						}) //删除ajax结束
 					} //点击弹出窗口结束 
 				}) //点击删除结束
+			}else{
+				alert(data.result);
 			}
 		},
 		error : function(){
@@ -120,16 +124,16 @@ $(function(){
 				  		'<div class="addBox-content">'+
 					  		'<form id="memberForm" name="memberForm" method="post" enctype="multipart/form-data">'+
 					  			'<p>'+
-					  				'学&nbsp;&nbsp;&nbsp;&nbsp;号：<input name="memberStuId" type="text" />'+
+					  				'学&nbsp;&nbsp;&nbsp;&nbsp;号：<input name="studentNo" type="text" />'+
 					  			'</p>'+
 					  			'<p>'+
-					  				'姓&nbsp;&nbsp;&nbsp;&nbsp;名：<input name="memberName" type="text" />'+
+					  				'姓&nbsp;&nbsp;&nbsp;&nbsp;名：<input name="studentName" type="text" />'+
 					  			'</p>'+
 					  			'<p>'+
-					  				'职&nbsp;&nbsp;&nbsp;&nbsp;务：<input name="memberRole" type="text" />'+
+					  				'职&nbsp;&nbsp;&nbsp;&nbsp;务：<input name="title" type="text" />'+
 					  			'</p>'+
 					  			'<p>'+
-					  				'贡献率：<input name="memberScore" type="text" />'+
+					  				'贡献率：<input name="contribution" type="text" />'+
 					  			'</p>'+
 					  		'</form>'+
 					  		'<p>'+
@@ -147,17 +151,30 @@ $(function(){
 
 		//确认添加
 		$(".addMember-sure").click(function(){
-			var form = new FormData(document.getElementById('memberForm'));
-			console.log($("#memberForm").serialize());
+			var contribution = $("#memberForm input[name='contribution']").val();
+			var studentName = $("#memberForm input[name='studentName']").val();
+			var studentNo = $("#memberForm input[name='studentNo']").val();
+			var title = $("#memberForm input[name='title']").val();
+			var memberDetail = {"contribution": contribution,"studentName": studentName,"studentNo": studentNo,"title": title};
+			console.log(memberDetail);
 			$.ajax({
-				url : "/memberMessageAction!addMemberMessage.action",
+				url : "/erpm/memberDetailAction!addMemberDetail.action",
 				type : "POST",
-				processData: false,
-				data :form,
+				dataType:"json",
+				data :{
+					"contribution": contribution,
+					"studentName": studentName,
+					"studentNo": studentNo,
+					"title": title
+				},
 				success : function(data){   //请求成功
-					console.log(data);  //打印出后台返回数据
-					alert(data.result); 
-					window.location.reload();  //页面自动重新加载					
+					if(data.code == 1){
+						console.log(data);  //打印出后台返回数据
+						alert(data.result); 
+						//window.location.reload();  //页面自动重新加载	
+					}else{
+						alert(data.result);
+					}				
 				},
 				error : function(){   //请求失败
 					alert("请求失败");
