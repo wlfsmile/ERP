@@ -56,14 +56,14 @@ $(function(){
 
 					//点击确认修改
 					$(".changeMember-sure").click(function(){
-						var changeform = new FormData(document.getElementById("changeForm"));
-						console.log($("#changeForm").serialize());
 						$.ajax({
 							url : "/erpm/memberDetailAction!updateMemberMessage.action",
 							type : "POST",
 							dataType:"json",
 							processData: false,
-							data :changeform,
+							data :{
+
+							},
 							success : function(data){   //请求成功
 								if(data.code == 1){
 									console.log(data);  //打印出后台返回数据
@@ -171,12 +171,12 @@ $(function(){
 					if(data.code == 1){
 						console.log(data);  //打印出后台返回数据
 						alert(data.result); 
-						//window.location.reload();  //页面自动重新加载	
+						window.location.reload();  //页面自动重新加载	
 					}else{
 						alert(data.result);
 					}				
 				},
-				error : function(){   //请求失败
+				error : function(){   //请求失败 
 					alert("请求失败");
 				}
 			})

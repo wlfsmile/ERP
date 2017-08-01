@@ -42,6 +42,12 @@ window.onload = function () {
         _this.contribute($(this));
       })
 
+      this.$table.on('click','.proportion',function(e){
+        //成绩比例设置
+        e.preventDefault();
+        _this.proportion($(this));
+      })
+
       // 结束经营
       this.$table.on('click', '.gameover', function (e) {
         e.preventDefault();
@@ -182,11 +188,15 @@ window.onload = function () {
                    '<td>' + trdata.years + '</td>' +
                    /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                    '<td>' + trdata.currentPeriod + '</td>' +
-                      '<td>' +
+                   '<td>'+
+                      '<a href="#" class="contribute">学生贡献度确认</a></br>'+
+                      '<a href="#" class="proportion">成绩比例设置</a>'+
+                    '</td>'+
+                    '<td>' +
                       '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a></br>' +
-                      '<a href="#" class="contribute"><span class="icon-contribute"></span>学生贡献度确认</a>'+
-                      '</td></tr>';
+                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
+                    '</td>'+
+                    '</tr>';
             option.table.append(tr1);
             option.table.append(tr2);
           }
@@ -232,11 +242,15 @@ window.onload = function () {
                        '<td>' + trdata.years + '</td>' +
                        /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                        '<td>' + trdata.currentPeriod + '</td>' +
+                          '<td>'+
+                            '<a href="#" class="contribute">学生贡献度确认</a></br>'+
+                            '<a href="#" class="proportion">成绩比例设置</a>'+
+                          '</td>'+
                           '<td>' +
-                          '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                          '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
-                          '<a href="#" class="contribute"><span class="icon-history"></span>学生贡献度确认</a>'+
-                          '</td></tr>';
+                            '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
+                            '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
+                          '</td>'+
+                          '</tr>';
             option.table.append(tr1);
             option.table.append(tr2);
           }
@@ -453,8 +467,8 @@ window.onload = function () {
           //如果未确认，有取消和确定按钮
           if(res.confirm == 0){
             DIALOG.confirm(tableStr,function(){
-
-            },'json');
+              console.log(22);
+            });
             /*var buttonStr = '<button class="sure-contribute box-btn">确定</button>'+
                             '<button class="cancel-contribute box-btn">取消</button>';*/
             //$('.box-table').append(buttonStr);
@@ -464,7 +478,42 @@ window.onload = function () {
           }
         }
       })
+    },
+
+    proportion : function(the){ //成绩比例设置
+      var _this = this;
+      var tr = the.closest('tr');
+      var groupName = tr.attr('data-name');
+      var groupname = tr.find('.groupname').text();
+      var data = {
+        groupName: groupName
+      };
+      $.post('http://rapapi.org/mockjsdata/22245/proportion',data,function(res){
+        var resData = res.gameData;
+        var propStr = '<div class="clearfix">'+
+                        '<div class="gameInfo">'+
+                          '<p>比赛名称：<input type="text" name="groupName" readonly="disable" value="'+resData.groupName+'" /></p>'+
+                          '<p>企业数量：<input type="text" name="userNumbers" readonly="disable" value="'+resData.userNumbers+'" /></p>'+
+                          '<p>比赛持续年数：<input type="text" name="years" readonly="disable" value="'+resData.years+'" /></p>'+
+                          '<p>每年包含周期数：<input type="text" name="periodsOfOneYear" readonly="disable" value="'+resData.periods+'" /></p>'+
+                        '</div>'+
+                        '<div class="setProp">'+
+                          '<form>'+
+                            '<label>成绩比例设置</label>'+
+                            '<p>优：<input type="text" name="excellent" value="'+resData.excellent+'" /></p>'+
+                            '<p>良：<input type="text" name="fine" value="'+resData.fine+'" /></p>'+
+                            '<p>中：<input type="text" name="middle" value="'+resData.middle+'" /></p>'+
+                            '<p>及格：<input type="text" name="pass" value="'+resData.pass+'" /></p>'+
+                            '<p>不及格：<input type="text" name="fail" value="'+resData.fail+'" /></p>'+
+                          '</form>'+
+                        '</div>'+
+                      '</div>';
+        DIALOG.confirm(propStr,function(){
+
+        })
+      })
     }
+
   };
 
   grouplist.init();

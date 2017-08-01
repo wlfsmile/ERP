@@ -273,7 +273,7 @@ var DIALOG = null;
 		content += '<div class="dialog-footer"><button class="btn j_ok" href="#">确定</button><button class="btn j_cancel" href="#">取消</button></div>';
 		var confirmDialog = new DIALOG({
 			className : 'ui-dialog-confirm',
-			width : '450px',
+			width : '550px',
 			content : content,
 			cache : false,
 			closeBtn : false
@@ -291,6 +291,7 @@ var DIALOG = null;
 		confirmDialog.open();
 	}
 
+	//特定添加给确认学生贡献度（若已经确认过了）
 	Dialog.confirm0 = function(message,cancel){
 		var content = '<div class="ui-dialog-bd">' + message + '</div>';
 		content += '<div class="dialog-footer"><button class="btn j_cancel" href="#">取消</button></div>';
