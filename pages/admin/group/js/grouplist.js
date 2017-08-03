@@ -188,10 +188,6 @@ window.onload = function () {
                    '<td>' + trdata.years + '</td>' +
                    /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                    '<td>' + trdata.currentPeriod + '</td>' +
-                   '<td>'+
-                      '<a href="#" class="contribute">学生贡献度确认</a></br>'+
-                      '<a href="#" class="proportion">成绩比例设置</a>'+
-                    '</td>'+
                     '<td>' +
                       '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
                       '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
@@ -242,10 +238,6 @@ window.onload = function () {
                        '<td>' + trdata.years + '</td>' +
                        /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                        '<td>' + trdata.currentPeriod + '</td>' +
-                          '<td>'+
-                            '<a href="#" class="contribute">学生贡献度确认</a></br>'+
-                            '<a href="#" class="proportion">成绩比例设置</a>'+
-                          '</td>'+
                           '<td>' +
                             '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
                             '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
@@ -308,6 +300,7 @@ window.onload = function () {
                     '<th>游戏状态</th>' +
                     '<th>广告状态</th>' +
                     '<th>订单状态</th>' +
+                    '<th>操作</th>'+
                     '</tr>';
 
             $(items).each(function (index) {
@@ -378,6 +371,10 @@ window.onload = function () {
                         '<td>' + status + '</td>' +
                         '<td>' + advertisText + '</td>' +
                         '<td>' + orderText + '</td>' +
+                        '<td>'+
+                            '<a href="#" class="contribute"><span class="icon-contribute"></span>学生贡献度确认</a>'+
+                            '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a>'+
+                          '</td>'+
                         '</tr>';
             });
 
@@ -431,24 +428,25 @@ window.onload = function () {
 
     contribute:function(the){ //确认学生贡献度
       var _this = this;
-      var tr = the.closest('tr');
-      var groupName = tr.attr('data-name');
+      var tr = the.parent().closest('tr');
+      var userUnique = tr.attr('data-mark');
       var groupname = tr.find('.groupname').text();
       var data = {
-        groupName: groupName
+        userUnique: userUnique
       };
-      $.post('http://rapapi.org/mockjsdata/22245/contribute',data,function(res){
+      $.post('/erpm/memberDetailAction!findAllInSameTeam.action',data,function(res){
         var contributeStr = '';
-        var len = res.table.length;
-        var resData = res.table;
+        var resData = res.list;
+        var len = resData.length;
+        console
         if(res.code == 1){
           for(var i=0;i<len;i++){
-            contributeStr +=  '<tr>'+
-                                '<td>'+resData[i].name+'</td>'+
-                                '<td>'+resData[i].post+'</td>'+
+            contributeStr +=  '<tr data-user="'+ resData[i].userUnique +'">'+
+                                '<td>'+resData[i].groupName+'</td>'+
+                                '<td>'+resData[i].title+'</td>'+
                                 '<td>'+resData[i].studentNo+'</td>'+
                                 '<td>'+resData[i].studentName+'</td>'+
-                                '<td><input type="text" class="table-contribute" value="'+resData[i].contribute+'" /></td>'+
+                                '<td><input type="text" name="table-contribute" class="table-contribute" value="'+resData[i].contribution+'" /></td>'+
                               '</tr>';
           }
           var tableStr ='<div>'+ 
@@ -463,30 +461,45 @@ window.onload = function () {
                             contributeStr+
                           '</table>'+
                         '</div>';
-          //$('#box').append(tableStr);
           //如果未确认，有取消和确定按钮
-          if(res.confirm == 0){
+          if(!resData[0].confirm){
             DIALOG.confirm(tableStr,function(){
-              console.log(22);
+              var memberDetailList=[];
+              for(var i=0;i<len;i++){
+                var userUnique = resData[i].userUnique;
+                var studentNo = resData[i].studentNo;
+                var contribution = $('.table-contribute').eq(i).val();
+                var contributeItem = {
+                  "userUnique":userUnique,
+                  "studentNo":studentNo,
+                  "contribution":contribution
+                };
+                memberDetailList.push(contributeItem);
+              }
+              var data = {memberDetailList};
+              console.log(data);
+              $.post('/erpm/memberDetailAction!updateContribution.action',data,function(res){
+                if (res.code == 1) {
+                  TIP('确认成功！', 'success', 2000);
+                  _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+                }
+              },'json')
             });
-            /*var buttonStr = '<button class="sure-contribute box-btn">确定</button>'+
-                            '<button class="cancel-contribute box-btn">取消</button>';*/
-            //$('.box-table').append(buttonStr);
           }else{  //否则不可改贡献度
             DIALOG.confirm0(tableStr);
             $('.table-contribute').attr('disabled',true);
           }
         }
-      })
+      },'json')
     },
 
     proportion : function(the){ //成绩比例设置
       var _this = this;
-      var tr = the.closest('tr');
-      var groupName = tr.attr('data-name');
+      var tr = the.parent().closest('tr');
+      var userUnique = tr.attr('data-mark');
       var groupname = tr.find('.groupname').text();
       var data = {
-        groupName: groupName
+        userUnique: userUnique
       };
       $.post('http://rapapi.org/mockjsdata/22245/proportion',data,function(res){
         var resData = res.gameData;

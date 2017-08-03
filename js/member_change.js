@@ -30,16 +30,16 @@ $(function(){
 								  		'<div class="addBox-content">'+
 									  		'<form id="changeForm" name="changeForm" method="post" enctype="multipart/form-data">'+
 									  			'<p>'+
-									  				'学&nbsp;&nbsp;&nbsp;&nbsp;号：<input name="memberStuId" type="text" value="'+ $(this).parent().siblings().eq(0).text() +'" />'+
+									  				'学&nbsp;&nbsp;&nbsp;&nbsp;号：<input name="studentNo" type="text" value="'+ $(this).parent().siblings().eq(0).text() +'" />'+
 									  			'</p>'+
 									  			'<p>'+
-									  				'姓&nbsp;&nbsp;&nbsp;&nbsp;名：<input name="memberName" type="text" value="'+ $(this).parent().siblings().eq(1).text() +'" />'+
+									  				'姓&nbsp;&nbsp;&nbsp;&nbsp;名：<input name="studentName" type="text" value="'+ $(this).parent().siblings().eq(1).text() +'" />'+
 									  			'</p>'+
 									  			'<p>'+
-									  				'职&nbsp;&nbsp;&nbsp;&nbsp;务：<input name="memberRole" type="text" value="'+ $(this).parent().siblings().eq(2).text() +'" />'+
+									  				'职&nbsp;&nbsp;&nbsp;&nbsp;务：<input name="title" type="text" value="'+ $(this).parent().siblings().eq(2).text() +'" />'+
 									  			'</p>'+
 									  			'<p>'+
-									  				'贡献率：<input name="memberScore" type="text" value="'+ $(this).parent().siblings().eq(3).text() +'" />'+
+									  				'贡献率：<input name="contribution" type="text" value="'+ $(this).parent().siblings().eq(3).text() +'" />'+
 									  			'</p>'+
 									  		'</form>'+
 									  		'<p>'+
@@ -48,6 +48,7 @@ $(function(){
 								  		'</div>'+
 								  	'</div>';
 					//添加弹出框
+					var oldStudentNo = $(this).parent().siblings().eq(0).text();
 					$(".addBox").html(changeBoxStr)
 					//点击X
 					$(".addBox-close").click(function(){
@@ -56,13 +57,20 @@ $(function(){
 
 					//点击确认修改
 					$(".changeMember-sure").click(function(){
+						var contribution = $("#changeForm input[name='contribution']").val();
+						var studentName = $("#changeForm input[name='studentName']").val();
+						var studentNo = $("#changeForm input[name='studentNo']").val();
+						var title = $("#changeForm input[name='title']").val();
 						$.ajax({
-							url : "/erpm/memberDetailAction!updateMemberMessage.action",
+							url : "/erpm/memberDetailAction!updateMemberDetail.action",
 							type : "POST",
 							dataType:"json",
-							processData: false,
 							data :{
-
+								"contribution": contribution,
+								"studentName": studentName,
+								"studentNo": studentNo,
+								"title": title,
+								"oldStudentNo": oldStudentNo
 							},
 							success : function(data){   //请求成功
 								if(data.code == 1){
@@ -155,8 +163,6 @@ $(function(){
 			var studentName = $("#memberForm input[name='studentName']").val();
 			var studentNo = $("#memberForm input[name='studentNo']").val();
 			var title = $("#memberForm input[name='title']").val();
-			var memberDetail = {"contribution": contribution,"studentName": studentName,"studentNo": studentNo,"title": title};
-			console.log(memberDetail);
 			$.ajax({
 				url : "/erpm/memberDetailAction!addMemberDetail.action",
 				type : "POST",

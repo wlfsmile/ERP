@@ -804,8 +804,11 @@ div.alert-box-pop {
 .icon-history:before {
   content: '\e812';
 }
-.icon-contribute:before{
+.icon-proportion:before{
   content: '\e805'
+}
+.icon-contribute:before{
+  content: '\e803';
 }
 /* '' */
 /*
