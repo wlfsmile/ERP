@@ -15,7 +15,7 @@ $(function(){
 					  				'<td class="memberStuId">'+ memberData[i].studentNo +'</td>'+
 					  				'<td class="memberName">'+ memberData[i].studentName +'</td>'+
 					  				'<td class="memberRole">'+ memberData[i].title +'</td>'+
-					  				'<td class="memberScore">'+ memberData[i].grade +'</td>'+
+					  				'<td class="memberScore">'+ memberData[i].contribution +'</td>'+
 					  				'<td><span class="memberChange">修改</span><span class="memberDel">删除</span></td>'+
 					  			'</tr>'
 				}
@@ -141,7 +141,7 @@ $(function(){
 					  				'职&nbsp;&nbsp;&nbsp;&nbsp;务：<input name="title" type="text" />'+
 					  			'</p>'+
 					  			'<p>'+
-					  				'贡献率：<input name="contribution" type="text" />'+
+					  				'贡献率：<input name="contribution" type="text" value="0" readonly="readonly" />'+
 					  			'</p>'+
 					  		'</form>'+
 					  		'<p>'+

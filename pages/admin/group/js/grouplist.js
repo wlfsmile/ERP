@@ -190,7 +190,8 @@ window.onload = function () {
                    '<td>' + trdata.currentPeriod + '</td>' +
                     '<td>' +
                       '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
+                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a><br>' +
+                      '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a>'+
                     '</td>'+
                     '</tr>';
             option.table.append(tr1);
@@ -240,7 +241,8 @@ window.onload = function () {
                        '<td>' + trdata.currentPeriod + '</td>' +
                           '<td>' +
                             '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                            '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
+                            '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a><br>' +
+                            '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a>'+
                           '</td>'+
                           '</tr>';
             option.table.append(tr1);
@@ -373,7 +375,6 @@ window.onload = function () {
                         '<td>' + orderText + '</td>' +
                         '<td>'+
                             '<a href="#" class="contribute"><span class="icon-contribute"></span>学生贡献度确认</a>'+
-                            '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a>'+
                           '</td>'+
                         '</tr>';
             });
@@ -438,10 +439,10 @@ window.onload = function () {
         var contributeStr = '';
         var resData = res.list;
         var len = resData.length;
-        console
+        console.log(res);
         if(res.code == 1){
           for(var i=0;i<len;i++){
-            contributeStr +=  '<tr data-user="'+ resData[i].userUnique +'">'+
+            contributeStr +=  '<tr class="tr-contribute" data-user="'+ resData[i].userUnique +'">'+
                                 '<td>'+resData[i].groupName+'</td>'+
                                 '<td>'+resData[i].title+'</td>'+
                                 '<td>'+resData[i].studentNo+'</td>'+
@@ -476,14 +477,20 @@ window.onload = function () {
                 };
                 memberDetailList.push(contributeItem);
               }
-              var data = {memberDetailList};
-              console.log(data);
-              $.post('/erpm/memberDetailAction!updateContribution.action',data,function(res){
-                if (res.code == 1) {
-                  TIP('确认成功！', 'success', 2000);
-                  _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+              var memberDetailList = {memberDetailList};
+              $.ajax({
+                url:"/erpm/memberDetailAction!updateContribution.action",
+                type:"POST",
+                dataType:"json",
+                data:{memberDetailList},
+                traditional: true,
+                success:function(res){
+                    if (res.code == 1) {
+                      TIP(res.result, 'success', 2000);
+                      _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+                    }
                 }
-              },'json')
+              })
             });
           }else{  //否则不可改贡献度
             DIALOG.confirm0(tableStr);
@@ -495,36 +502,65 @@ window.onload = function () {
 
     proportion : function(the){ //成绩比例设置
       var _this = this;
-      var tr = the.parent().closest('tr');
+      var tr = the.closest('tr');
       var userUnique = tr.attr('data-mark');
       var groupname = tr.find('.groupname').text();
       var data = {
-        userUnique: userUnique
+        groupName: groupname
       };
-      $.post('http://rapapi.org/mockjsdata/22245/proportion',data,function(res){
-        var resData = res.gameData;
+      $.post('/erpm/gameGroupAction!selectGradeProportion.action',data,function(res){
+        var resData = res;
         var propStr = '<div class="clearfix">'+
                         '<div class="gameInfo">'+
                           '<p>比赛名称：<input type="text" name="groupName" readonly="disable" value="'+resData.groupName+'" /></p>'+
                           '<p>企业数量：<input type="text" name="userNumbers" readonly="disable" value="'+resData.userNumbers+'" /></p>'+
                           '<p>比赛持续年数：<input type="text" name="years" readonly="disable" value="'+resData.years+'" /></p>'+
-                          '<p>每年包含周期数：<input type="text" name="periodsOfOneYear" readonly="disable" value="'+resData.periods+'" /></p>'+
+                          '<p>每年包含周期数：<input type="text" name="periodsOfOneYear" readonly="disable" value="'+resData.periodsOfOneYear+'" /></p>'+
                         '</div>'+
                         '<div class="setProp">'+
-                          '<form>'+
+                          '<form id="proportionForm">'+
                             '<label>成绩比例设置</label>'+
                             '<p>优：<input type="text" name="excellent" value="'+resData.excellent+'" /></p>'+
-                            '<p>良：<input type="text" name="fine" value="'+resData.fine+'" /></p>'+
-                            '<p>中：<input type="text" name="middle" value="'+resData.middle+'" /></p>'+
-                            '<p>及格：<input type="text" name="pass" value="'+resData.pass+'" /></p>'+
-                            '<p>不及格：<input type="text" name="fail" value="'+resData.fail+'" /></p>'+
+                            '<p>良：<input type="text" name="good" value="'+resData.good+'" /></p>'+
+                            '<p>中：<input type="text" name="mean" value="'+resData.mean+'" /></p>'+
+                            '<p>及格：<input type="text" name="passed" value="'+resData.passed+'" /></p>'+
+                            '<p>不及格：<input type="text" name="failed" value="'+resData.failed+'" /></p>'+
                           '</form>'+
+                          '<p class="propPrompt">成绩比例之和必须为100</p>'+
                         '</div>'+
                       '</div>';
         DIALOG.confirm(propStr,function(){
-
+          var excellent = $("input[name='excellent']").val(),
+              good = $("input[name='good']").val(),
+              mean = $("input[name='mean']").val(),
+              passed = $("input[name='passed']").val(),
+              failed = $("input[name='failed']").val();
+          var proportionForm = $("#proportionForm input"); 
+          var len = proportionForm.length;
+          var num = 0;
+          for(var i=0;i<len;i++){
+            num += parseInt(proportionForm.eq(i).val());
+          }
+          var data={
+            "excellent":excellent,
+            "good":good,
+            "mean":mean,
+            "passed":passed,
+            "failed":failed,
+            "groupName":groupname
+          };
+          if(num == 100){
+            $.post('/erpm/gameGroupAction!setGradeProportion.action',data,function(res){
+              if (res.code == 1) {
+                TIP('操作成功', 'success', 2000);
+                  _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+                }
+            },'json')
+          }else{
+            alert($(".propPrompt").text());
+          }
         })
-      })
+      },'json')
     }
 
   };
