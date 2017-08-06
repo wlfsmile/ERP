@@ -439,7 +439,6 @@ window.onload = function () {
         var contributeStr = '';
         var resData = res.list;
         var len = resData.length;
-        console.log(res);
         if(res.code == 1){
           for(var i=0;i<len;i++){
             contributeStr +=  '<tr class="tr-contribute" data-user="'+ resData[i].userUnique +'">'+
@@ -466,31 +465,39 @@ window.onload = function () {
           if(!resData[0].confirm){
             DIALOG.confirm(tableStr,function(){
               var memberDetailList=[];
+              var data = {};
               for(var i=0;i<len;i++){
                 var userUnique = resData[i].userUnique;
                 var studentNo = resData[i].studentNo;
                 var contribution = $('.table-contribute').eq(i).val();
-                var contributeItem = {
-                  "userUnique":userUnique,
-                  "studentNo":studentNo,
-                  "contribution":contribution
-                };
-                memberDetailList.push(contributeItem);
+                // var contributeItem = {
+                //   "userUnique":userUnique,
+                //   "studentNo":studentNo,
+                //   "contribution":contribution
+                // };
+                // memberDetailList.push(contributeItem);
+                data["memberDetailList["+i+"].userUnique"] = userUnique;
+                data["memberDetailList["+i+"].studentNo"] = studentNo;
+                data["memberDetailList["+i+"].contribution"] = contribution;
               }
-              var memberDetailList = {memberDetailList};
-              $.ajax({
-                url:"/erpm/memberDetailAction!updateContribution.action",
-                type:"POST",
-                dataType:"json",
-                data:{memberDetailList},
-                traditional: true,
-                success:function(res){
-                    if (res.code == 1) {
-                      TIP(res.result, 'success', 2000);
-                      _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
-                    }
+              // $.ajax({
+              //   url:"/erpm/memberDetailAction!updateContribution.action",
+              //   type:"POST",
+              //   dataType:"json",
+              //   data:data,
+              //   success:function(res){
+              //       if (res.code == 1) {
+              //         TIP(res.result, 'success', 2000);
+              //         _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+              //       }
+              //   }
+              // })
+              $.post('/erpm/memberDetailAction!updateContribution.action',data,function(){
+                if (res.code == 1) {
+                  TIP(res.result, 'success', 2000);
+                  _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
                 }
-              })
+              },'json')
             });
           }else{  //否则不可改贡献度
             DIALOG.confirm0(tableStr);
