@@ -310,18 +310,18 @@ $.extend({
     $('input[name="create"]').click(function () {
       groupname($('input[name="groupName"]'));
       creategroupCheck($('input[name="userNumbers"]'));
-      creategroupCheck($('input[name="years"]'));
-      creategroupCheck($('input[name="periodsOfOneYear"]'));
+      /*creategroupCheck($('input[name="years"]'));
+      creategroupCheck($('input[name="periodsOfOneYear"]'));*/
       if (ok1 && ok2) {
         var groupName = $('input[name="groupName"]').val();
         var userNumbers = $('input[name="userNumbers"]').val();
-        var years = $('input[name="years"]').val();
-        var periodsOfOneYear = $('input[name="periodsOfOneYear"]').val();
+        /*var years = $('input[name="years"]').val();
+        var periodsOfOneYear = $('input[name="periodsOfOneYear"]').val();*/
         $.post('gameGroupAction!addGameGroup.action?rnd=' + Math.random(), {
           'groupName': groupName,
           'userNumbers': userNumbers,
-          'years': years,
-          'periodsOfOneYear': periodsOfOneYear
+          'years': 6,
+          'periodsOfOneYear': 4
         }, function () {
           window.parent.location.assign('useroperate.html');
         });

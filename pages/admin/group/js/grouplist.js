@@ -184,14 +184,15 @@ window.onload = function () {
                       '</td>';
             tr1 += '<td class="groupname">' + trdata.groupName + '</td>' +
                    '<td>' + trdata.groupCreaterId + '</td>' +
-                   '<td>' + trdata.userNumbers + '</td>' +
+                   '<td class="userNumbers">' + trdata.userNumbers + '</td>' +
                    '<td>' + trdata.years + '</td>' +
                    /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                    '<td>' + trdata.currentPeriod + '</td>' +
                     '<td>' +
+                      '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a><br>'+
+                      '<a href="#" class="set-score"><span class="icon-proportion"></span>计算/查看成绩</a><br>' +
                       '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a><br>' +
-                      '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a>'+
+                      '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
                     '</td>'+
                     '</tr>';
             option.table.append(tr1);
@@ -235,14 +236,15 @@ window.onload = function () {
                           '</td>';
             tr1 += '<td class="groupname">' + trdata.groupName + '</td>' +
                        '<td>' + trdata.groupCreaterId + '</td>' +
-                       '<td>' + trdata.userNumbers + '</td>' +
+                       '<td class="userNumbers">' + trdata.userNumbers + '</td>' +
                        '<td>' + trdata.years + '</td>' +
                        /*'<td>' + trdata.periodsOfOneYear + '</td>' +*/
                        '<td>' + trdata.currentPeriod + '</td>' +
                           '<td>' +
+                            '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a><br>'+
+                            '<a href="#" class="set-score"><span class="icon-proportion"></span>计算/查看成绩</a><br>' +
                             '<a href="#" class="delete"><span class="icon-trash-empty"></span>删除</a>' +
-                            '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a><br>' +
-                            '<a href="#" class="proportion"><span class="icon-proportion"></span>成绩比例设置</a>'+
+                            '<a href="#" class="add-history"><span class="icon-history"></span>保存数据</a>' +
                           '</td>'+
                           '</tr>';
             option.table.append(tr1);
@@ -470,28 +472,10 @@ window.onload = function () {
                 var userUnique = resData[i].userUnique;
                 var studentNo = resData[i].studentNo;
                 var contribution = $('.table-contribute').eq(i).val();
-                // var contributeItem = {
-                //   "userUnique":userUnique,
-                //   "studentNo":studentNo,
-                //   "contribution":contribution
-                // };
-                // memberDetailList.push(contributeItem);
                 data["memberDetailList["+i+"].userUnique"] = userUnique;
                 data["memberDetailList["+i+"].studentNo"] = studentNo;
                 data["memberDetailList["+i+"].contribution"] = contribution;
               }
-              // $.ajax({
-              //   url:"/erpm/memberDetailAction!updateContribution.action",
-              //   type:"POST",
-              //   dataType:"json",
-              //   data:data,
-              //   success:function(res){
-              //       if (res.code == 1) {
-              //         TIP(res.result, 'success', 2000);
-              //         _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
-              //       }
-              //   }
-              // })
               $.post('/erpm/memberDetailAction!updateContribution.action',data,function(){
                 if (res.code == 1) {
                   TIP(res.result, 'success', 2000);
@@ -512,6 +496,7 @@ window.onload = function () {
       var tr = the.closest('tr');
       var userUnique = tr.attr('data-mark');
       var groupname = tr.find('.groupname').text();
+      var userNumbers = tr.find('.userNumbers').text();
       var data = {
         groupName: groupname
       };
@@ -520,7 +505,7 @@ window.onload = function () {
         var propStr = '<div class="clearfix">'+
                         '<div class="gameInfo">'+
                           '<p>比赛名称：<input type="text" name="groupName" readonly="disable" value="'+resData.groupName+'" /></p>'+
-                          '<p>企业数量：<input type="text" name="userNumbers" readonly="disable" value="'+resData.userNumbers+'" /></p>'+
+                          '<p>企业数量：<input type="text" name="userNumbers" readonly="disable" value="'+userNumbers+'" /></p>'+
                           '<p>比赛持续年数：<input type="text" name="years" readonly="disable" value="'+resData.years+'" /></p>'+
                           '<p>每年包含周期数：<input type="text" name="periodsOfOneYear" readonly="disable" value="'+resData.periodsOfOneYear+'" /></p>'+
                         '</div>'+
@@ -556,7 +541,7 @@ window.onload = function () {
             "failed":failed,
             "groupName":groupname
           };
-          if(num == 100){
+          if(num == 1){
             $.post('/erpm/gameGroupAction!setGradeProportion.action',data,function(res){
               if (res.code == 1) {
                 TIP('操作成功', 'success', 2000);
