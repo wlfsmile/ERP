@@ -279,7 +279,7 @@ var DIALOG = null;
 			closeBtn : false
 		});
 		confirmDialog.$root.on('click', '.btn', function(e) {
-			e.preventDefault();
+			//e.preventDefault();
 			var $target = $(this);
 			if ($target.hasClass('j_ok')) {
 				ok && ok.call(this);

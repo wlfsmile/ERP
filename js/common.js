@@ -34,6 +34,27 @@ $(function () {
     $(iframe).height(height);
   }
 
+  //下载实验报告
+  function wordDown(){
+    $.get('/erpm/reportAction!downloadPersonReport.action',function(res){
+      if(res.status == 1){
+        $('.wordBtn').attr('href','/erpm/'+res.path);
+      }
+    },'json')
+  }
+
+  //预览实验报告
+  function wordPreview(){
+    $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
+      wordPath = "/erpm/"+res.path;
+      document.getElementById('frame_content').src=wordPath; 
+      $('.wordBtnBox').css({
+        'display':'block'
+      })
+      wordDown();
+    },'json');
+  }
+
   $('.tab_td3 img').hover(function () {
     $(this).siblings().slideToggle('slow');
   });
@@ -58,6 +79,25 @@ $(function () {
       $('.profile p').eq(1).children().html(data.money);
       $('.profile p').eq(2).children().html(data.tax);
       $('.profile p').eq(3).children().html(data.numberOfFactories);
+
+      //导出实验报告
+      $('.tab_tab4').click(function(){
+        var wordPath;
+        var require = {
+          gameName : groupName
+        };
+        $.post('/erpm/gameGroupAction!isDoneFroScore.action',require,function(res){
+          if(res.status == 1){
+            wordPreview();
+          }else{
+            if(confirm('实验成绩尚未判出，是否确定导出实验报告')){
+              wordPreview();
+            }
+          }
+        },'json')
+
+      });
+
     }, 'json');
   });
 
@@ -93,6 +133,7 @@ $(function () {
 
   var left = parseInt($('.header').width() - $('.footerSpan').width()) / 2 - 179;
   $('.footerSpan').css('margin-left', left + 'px');
+
 });
 
 // 对左边菜单栏进行设置

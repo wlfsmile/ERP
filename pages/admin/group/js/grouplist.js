@@ -48,6 +48,13 @@ window.onload = function () {
         _this.proportion($(this));
       })
 
+      this.$table.on('click','.set-score',function(e){
+        //计算/查看实验成绩
+        e.preventDefault();
+        e.stopPropagation();
+        _this.setScore($(this));
+      })
+
       // 结束经营
       this.$table.on('click', '.gameover', function (e) {
         e.preventDefault();
@@ -484,7 +491,8 @@ window.onload = function () {
               },'json')
             });
           }else{  //否则不可改贡献度
-            DIALOG.confirm0(tableStr);
+            DIALOG.confirm(tableStr);
+            $('.j_ok').remove();
             $('.table-contribute').attr('disabled',true);
           }
         }
@@ -512,15 +520,16 @@ window.onload = function () {
                         '<div class="setProp">'+
                           '<form id="proportionForm">'+
                             '<label>成绩比例设置</label>'+
-                            '<p>优：<input type="text" name="excellent" value="'+resData.excellent+'" /></p>'+
-                            '<p>良：<input type="text" name="good" value="'+resData.good+'" /></p>'+
-                            '<p>中：<input type="text" name="mean" value="'+resData.mean+'" /></p>'+
-                            '<p>及格：<input type="text" name="passed" value="'+resData.passed+'" /></p>'+
-                            '<p>不及格：<input type="text" name="failed" value="'+resData.failed+'" /></p>'+
+                            '<p>优：<input type="text" name="excellent" maxlength="4" value="'+resData.excellent+'" /></p>'+
+                            '<p>良：<input type="text" name="good" maxlength="4" value="'+resData.good+'" /></p>'+
+                            '<p>中：<input type="text" name="mean" maxlength="4" value="'+resData.mean+'" /></p>'+
+                            '<p>及格：<input type="text" name="passed" maxlength="4" value="'+resData.passed+'" /></p>'+
+                            '<p>不及格：<input type="text" name="failed" maxlength="4" value="'+resData.failed+'" /></p>'+
                           '</form>'+
-                          '<p class="propPrompt">成绩比例之和必须为100</p>'+
+                          '<p class="propPrompt"></p>'+
                         '</div>'+
                       '</div>';
+
         DIALOG.confirm(propStr,function(){
           var excellent = $("input[name='excellent']").val(),
               good = $("input[name='good']").val(),
@@ -531,7 +540,7 @@ window.onload = function () {
           var len = proportionForm.length;
           var num = 0;
           for(var i=0;i<len;i++){
-            num += parseInt(proportionForm.eq(i).val());
+            num += parseInt(proportionForm.eq(i).val()*100);
           }
           var data={
             "excellent":excellent,
@@ -541,20 +550,72 @@ window.onload = function () {
             "failed":failed,
             "groupName":groupname
           };
-          if(num == 1){
+          if(num == 100){
             $.post('/erpm/gameGroupAction!setGradeProportion.action',data,function(res){
               if (res.code == 1) {
                 TIP('操作成功', 'success', 2000);
                   _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+                }else{
+                  TIP('操作失败', 'error', 2000);
                 }
             },'json')
           }else{
-            alert($(".propPrompt").text());
+            $('.propPrompt').html('成绩比例之和必须为1');
+            console.log($('.propPrompt').text());
+            alert('成绩比例之和必须为1');
           }
         })
       },'json')
-    }
+    },
 
+    setScore : function(the){
+      $('.screen').removeClass('hidden');
+      var _this = this;
+      var tr = the.closest('tr');
+      var groupname = tr.find('.groupname').text();
+      var data = {
+        gameName : groupname
+      };
+      $.post('/erpm/gameGroupAction!scoring.action',data,function(res){
+        var resData = res.details;
+        var len = resData.length;
+        var scoreStr = '';
+        for(var i=0;i<len;i++){
+          scoreStr +=  '<tr class="tr-contribute" data-user="'+ resData[i].userUnique +'">'+
+                          '<td>'+resData[i].studentNo+'</td>'+
+                          '<td>'+resData[i].studentName+'</td>'+
+                          '<td>'+resData[i].groupName+'</td>'+
+                          '<td>'+resData[i].title+'</td>'+
+                          '<td>'+resData[i].score+'</td>'+
+                        '</tr>';
+        }
+        var tableStr ='<div>'+ 
+                        '<table border="1" cellspacing="0" cellpadding="0" class="box-table" >'+
+                          '<tr>'+
+                            '<td>学号</td>'+
+                            '<td>姓名</td>'+
+                            '<td>所在企业</td>'+
+                            '<td>担任职务</td>'+
+                            '<td class="table-td-score">成绩</td>'+
+                          '</tr>'+
+                          scoreStr+
+                        '</table>'+
+                      '</div>';
+        if(res.status == 1){
+          DIALOG.confirm(tableStr)
+          $('.dialog-footer').html('<a class="btn j_excel" download="实验成绩单" href="#">导出为Excel</a><button class="btn j_cancel" href="#">取消</button>');
+          $.post('/erpm/excelAction!download.action',data,function(res){
+              if(res.status == 1){
+                 $('.j_excel').attr('href',res.path);
+              }else{
+                alert(res.message);
+              }
+          },'json');
+        }else{
+          alert(res.message);
+        }
+      },'json')
+    }
   };
 
   grouplist.init();

@@ -271,3 +271,22 @@ background-attachment:fixed;
 	font-size:16px;
 	margin-left:30px;
 }
+
+/*预览实验报告的保存按钮*/
+.wordBtnBox{
+	display: none;
+	margin-bottom: 30px;
+}
+.wordBtnBox a{
+	width: 100px;
+	height: 40px;
+	background-color: #12385F;
+	text-align: center;	
+	margin-left:500px;
+	border: none;
+	display: block;
+	line-height: 40px;
+	text-decoration: none;
+	color: #fff;
+	font-size: 16px;
+}
