@@ -112,7 +112,33 @@
 	word-spacing:2px;
 	font-weight:bold;
 }
-.right_register:hover{color:red;}
+.right_register:hover{
+	color:red;
+}
+/*进入英文按钮*/
+.englishButton{
+    width:260px;
+	height:37px;
+	background:#369;
+	border:0px;
+	font:normal 16px "微软雅黑";
+	margin-top:80px;
+	margin-left:65px;
+	color:#fff;
+	cursor:pointer;
+}
+/*进入中文按钮*/
+.ChineseButton{
+    width:260px;
+	height:37px;
+	background:#369;
+	border:0px;
+	font:normal 16px "微软雅黑";
+	margin-top:80px;
+	margin-left:65px;
+	color:#fff;
+	cursor:pointer;
+}
 /*设置底部信息*/
 .blank_div table{
 	margin:auto;

@@ -888,6 +888,6 @@ div.alert-box-pop {
     -moz-transform: rotate(359deg);
     -o-transform: rotate(359deg);
     -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
+    transfo,rm: rotate(359deg);
   }
 }
