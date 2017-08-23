@@ -35,16 +35,15 @@ $(function () {
   }
 
   //预览实验报告
-  function wordPreview(){
-    $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
-      var timer = setTimeout(function(){
-          clearTimeout(timer);
-         window.open("/erpm/"+res.path,'_blanks');
-
-      },2000);
-      wordPath = "/erpm/"+res.path;
-    },'json');
-  }
+  // function wordPreview(){
+  //   $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
+  //     wordPath = "/erpm/"+res.path;
+  //     var timer = setTimeout(function(){
+  //         clearTimeout(timer);
+  //        window.open(wordPath,'_blanks');
+  //     },1500);
+  //   },'json');
+  // }
 
   $('.tab_td3 img').hover(function () {
     $(this).siblings().slideToggle('slow');
@@ -76,9 +75,7 @@ $(function () {
       $('.profile p').eq(3).children().html(data.numberOfFactories);
 
       //预览实验报告
-      $('.tab_tab3 .preview').on('click',function(event){
-        event.stopPropagation(); 
-        console.log(2);
+      var onClick = function(){
         var wordPath;
         var require = {
           gameName : groupName
@@ -89,11 +86,20 @@ $(function () {
             wordPreview();
           }else{
             if(mymessage){
-              wordPreview();
+              $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
+                wordPath = "/erpm/"+res.path;
+                var timer = setTimeout(function(){
+                    clearTimeout(timer);
+                   window.open(wordPath,'_blanks');
+                },1500);
+              },'json');
             }
           }
         },'json')
-      })
+      }
+      $('.preview').on('click',onClick)
+      //取消click事件
+      $('.preview').off('click').on('click', onClick);
       //下载实验报告
       $.get('/erpm/reportAction!downloadPersonReport.action',function(res){
         if(res.status == 1){
