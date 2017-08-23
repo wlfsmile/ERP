@@ -18,22 +18,26 @@
   <div class="header common_color">
     <table cellspacing="0" class="common_float_right">
       <tr>
-        <td class="tab_td1">
+        <td class="tab tab_td1">
           <a id="refresh" href="flashview.html" target="iframebody" title="点击刷新">
             <img src="../../images/ico_refresh.png">
           </a>
         </td>
-        <td class="tab_tab2">
+        <td class="tab tab_tab2">
           <a href="memberchange.html" target="iframebody" title="职务设置">
             <img src="../../images/ico_change.png">
           </a>
         </td>
-        <td class="tab_tab4" id="inIframe">
-          <a href="#" target="iframebody" title="导出实验报告">
+        <td class="tab tab_tab3" id="inIframe">
+          <!-- <a href="#" target="iframebody" title="导出实验报告"> -->
             <img src="../../images/ico_word.png">
-          </a>
+            <div class="select">
+              <a class="preview">预览</a>
+              <a href="#" class="down">下载</a>
+            </div>
+          <!-- </a> -->
         </td>
-        <td class="tab_td5">
+        <td class="tab tab_td5">
           <a href="javascript:logout()" title="退出">
             <img src="../../images/signout.png" alt="退出">
           </a>
@@ -284,9 +288,6 @@
     
     <div class="content_right common_float_left">
       <iframe name="iframebody" id="frame_content" frameborder="0"></iframe>
-      <div class="wordBtnBox">
-        <a class="wordBtn">保存</a>
-      </div>
     </div>
   </div>
   

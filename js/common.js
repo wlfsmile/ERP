@@ -34,29 +34,24 @@ $(function () {
     $(iframe).height(height);
   }
 
-  //下载实验报告
-  function wordDown(){
-    $.get('/erpm/reportAction!downloadPersonReport.action',function(res){
-      if(res.status == 1){
-        $('.wordBtn').attr('href','/erpm/'+res.path);
-      }
-    },'json')
-  }
-
   //预览实验报告
   function wordPreview(){
     $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
+      var timer = setTimeout(function(){
+          clearTimeout(timer);
+         window.open("/erpm/"+res.path,'_blanks');
+
+      },2000);
       wordPath = "/erpm/"+res.path;
-      document.getElementById('frame_content').src=wordPath; 
-      $('.wordBtnBox').css({
-        'display':'block'
-      })
-      wordDown();
     },'json');
   }
 
   $('.tab_td3 img').hover(function () {
     $(this).siblings().slideToggle('slow');
+  });
+
+  $('.tab_tab3').hover(function () {
+    $(this).children('.select').stop(true,true).slideToggle('slow');
   });
 
   $('.content_left_dl a').on('click', function () {
@@ -80,23 +75,31 @@ $(function () {
       $('.profile p').eq(2).children().html(data.tax);
       $('.profile p').eq(3).children().html(data.numberOfFactories);
 
-      //导出实验报告
-      $('.tab_tab4').click(function(){
+      //预览实验报告
+      $('.tab_tab3 .preview').on('click',function(event){
+        event.stopPropagation(); 
+        console.log(2);
         var wordPath;
         var require = {
           gameName : groupName
         };
+        mymessage=confirm("实验成绩尚未判出，是否确定预览实验报告");
         $.post('/erpm/gameGroupAction!isDoneFroScore.action',require,function(res){
           if(res.status == 1){
             wordPreview();
           }else{
-            if(confirm('实验成绩尚未判出，是否确定导出实验报告')){
+            if(mymessage){
               wordPreview();
             }
           }
         },'json')
-
-      });
+      })
+      //下载实验报告
+      $.get('/erpm/reportAction!downloadPersonReport.action',function(res){
+        if(res.status == 1){
+          $('.down').attr('href','/erpm/'+res.path);
+        }
+      },'json')
 
     }, 'json');
   });
