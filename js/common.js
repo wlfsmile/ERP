@@ -83,7 +83,13 @@ $(function () {
         mymessage=confirm("实验成绩尚未判出，是否确定预览实验报告");
         $.post('/erpm/gameGroupAction!isDoneFroScore.action',require,function(res){
           if(res.status == 1){
-            wordPreview();
+            $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
+              wordPath = "/erpm/"+res.path;
+              var timer = setTimeout(function(){
+                  clearTimeout(timer);
+                 window.open(wordPath,'_blanks');
+              },1500);
+            },'json');
           }else{
             if(mymessage){
               $.get('/erpm/reportAction!reviewPersonReport.action',function(res){
