@@ -323,7 +323,7 @@
                       clearTimeout(timer);
                     }, 1000);
                 } else if ($.parseJSON(res).code == 0) {
-                  TIP('批量导入数据失败 ！', 'error', 0);
+                  TIP('批量导入数据失败 请确认是否有重复数据！', 'error', 0);
                 }
               }
             };

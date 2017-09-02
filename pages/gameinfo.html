@@ -11,6 +11,7 @@
   <style type="text/css">
      html{overflow:scroll;}
   </style>
+    <script src="../js/common.js"/>
 <![endif]-->
 </head>
 <style>
@@ -23,37 +24,58 @@
 	<div class="header common_color">
 	</div>
 	<!--content-->
-	<div class="year_content">
-		<!--content_left-->
-		<div class="content_left common_float_left" id="mainLeft">
-			<div class="content_left_dl">
+<div class="year_content">
+    <!--content_left-->
+    <div class="content_left common_float_left" id="mainLeft">
+        <div class="content_left_dl">
 
-			<dl>
-			<dt><div></div><img src="../images/ico_left_8.png" />
-				<a href="javascript:void(0)" target="iframebody"><span>财务管理</span></a></dt>
-         <dd><a href="finance/account.html" target="iframebody"><span>查看会计分录</span></a></dd>
-         <dd><a href="finance/balancesheet.html" target="iframebody"><span>查看资产负债表</span></a></dd>
-         <dd><a href="finance/profit_sheet.html" target="iframebody"><span>查看利润表</span></a></dd>
-         <dd><a href="finance/check_cash.html" target="iframebody"><span>盘点现金</span></a></dd>
-			</dl>
+            <dl>
+                <dt><div></div><img src="../images/ico_left_8.png" />
+                    <a href="javascript:void(0)" target="iframebody"><span>财务管理</span></a></dt>
+                <dd><a href="finance/account.html" target="iframebody"><span>查看会计分录</span></a></dd>
+                <dd><a href="finance/balancesheet.html" target="iframebody"><span>查看资产负债表</span></a></dd>
+                <dd><a href="finance/profit_sheet.html" target="iframebody"><span>查看利润表</span></a></dd>
+                <dd><a href="finance/check_cash.html" target="iframebody"><span>盘点现金</span></a></dd>
+            </dl>
 
-      <dt class="extra">
-        <a href="javascript:void(0)" onclick="replay()">
-          <img src="../images/refresh.png">
-          <span>重新开始</span>
-        </a>
-      </dt>
+            <dl>
+                <dt><div></div><img src="../images/ico_word.png" />
+                    <a href="javascript:void(0)" target="iframebody"><span>实验报告</span></a></dt>
+                <dd><a class="preview" target="iframebody"><span>预览实验报告</span></a></dd>
+                <dd><a href="#" class="down" target="iframebody"><span>下载实验报告</span></a></dd>
+            </dl>
 
-			<dt class="extra">
-			  <a href="javascript:void(0)" onclick="exit()">
-          <div></div><img src="../images/ico_left_12.png" />
-				<span>退出游戏</span>
-			  </a>
-			</dt>
-		</dl>
+            <dt class="extra">
+                <a href="mainframework/summary.html" target="iframebody">
+                    <img src="../images/ico_summary.png"/>
+                    <span>填写实验心得</span>
+                </a>
+            </dt>
 
-		</div>
-	</div>
+            <dt class="extra">
+                <a href="mainframework/memberchange.html" target="iframebody">
+                    <img src="../images/ico_change.jpg"/>
+                    <span>小组成员设置</span>
+                </a>
+            </dt>
+
+            <dt class="extra">
+                <a href="javascript:void(0)" onclick="replay()">
+                    <img src="../images/refresh.png">
+                    <span>重新开始</span>
+                </a>
+            </dt>
+
+            <dt class="extra">
+                <a href="javascript:void(0)" onclick="exit()">
+                    <div></div><img src="../images/ico_left_12.png" />
+                    <span>退出游戏</span>
+                </a>
+            </dt>
+            </dl>
+
+        </div>
+    </div>
 	<!--content_right-->
 	<div class="content_right common_float_left">
 		<iframe name="iframebody"  scrolling="no" id="frame_content" frameborder="0"></iframe>

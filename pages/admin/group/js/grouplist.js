@@ -483,7 +483,7 @@ window.onload = function () {
                 data["memberDetailList["+i+"].studentNo"] = studentNo;
                 data["memberDetailList["+i+"].contribution"] = contribution;
               }
-              $.post('/erpm/memberDetailAction!updateContribution.action',data,function(){
+              $.post('/erpm/memberDetailAction!updateContribution.action',data,function(res){
                 if (res.code == 1) {
                   TIP(res.result, 'success', 2000);
                   _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
@@ -586,7 +586,7 @@ window.onload = function () {
                           '<td>'+resData[i].studentName+'</td>'+
                           '<td>'+resData[i].groupName+'</td>'+
                           '<td>'+resData[i].title+'</td>'+
-                          '<td>'+resData[i].score+'</td>'+
+                          '<td>'+resData[i].grade+'</td>'+
                         '</tr>';
         }
         var tableStr ='<div>'+ 
