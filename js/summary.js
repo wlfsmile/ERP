@@ -15,6 +15,7 @@ $(function(){
     		url = '/erpm/experienceAction!modify.action';
     		$('.submit').click(function(){
     		    var context = $('.froala-element').text();
+                console.log(context);
     		    summary(url,context);
     		})
     	}else{

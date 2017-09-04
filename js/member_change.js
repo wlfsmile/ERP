@@ -11,18 +11,18 @@ $(function(){
 				var memberStr = '';
 				var len = memberData.length;
 				for(var i=0;i<len;i++){
-					memberStr += '<tr>'+
-					  				'<td class="memberStuId">'+ memberData[i].studentNo +'</td>'+
-					  				'<td class="memberName">'+ memberData[i].studentName +'</td>'+
-					  				'<td class="memberRole">'+ memberData[i].title +'</td>'+
-					  				'<td class="memberScore">'+ memberData[i].contribution +'</td>'+
-					  				'<td><span class="memberChange">修改</span><span class="memberDel">删除</span></td>'+
+					memberStr += '<tr class="memberInfo-tr">'+
+					  				'<td class="memberStuId"><input readonly="true" name="studentNo" type="text" value="'+ memberData[i].studentNo +'" /></td>'+
+					  				'<td class="memberName"><input readonly="true" name="studentName" type="text" value="'+ memberData[i].studentName +'" /></td>'+
+					  				'<td class="memberRole"><input readonly="true" name="title" type="text" value="'+ memberData[i].title +'" /></td>'+
+					  				'<td class="memberScore"><input readonly="true" name="contribution" type="text" value="'+ memberData[i].contribution +'" /></td>'+
+					  				'<td><span class="memberDel">删除</span></td>'+
 					  			'</tr>'
 				}
 				$(".memberInfo-table").append(memberStr);
 
 				//点击修改
-				$(".memberChange").click(function(){
+				/*$(".memberChange").click(function(){
 					//弹出修改表单
 					var changeBoxStr = '';
 					changeBoxStr = '<div class="addBox-all">'+
@@ -86,12 +86,13 @@ $(function(){
 							}
 						})
 					}) //点击确认修改结束
-				})  //点击修改结束
+				})  //点击修改结束*/
 				 
 
 				//点击删除
 				$(".memberDel").click(function(){
-					var studentNo = $(this).parent().siblings().eq(0).text(); //获取成员学号
+					var studentNo = $(this).parent().siblings().find('input[name="studentNo"]').val(); //获取成员学号
+					console.log(studentNo);
 					if (confirm("确认删除此成员？")) {
 						$.ajax({
 							url : "/erpm/memberDetailAction!deleteMemberDetail.action",
@@ -141,7 +142,7 @@ $(function(){
 					  				'职&nbsp;&nbsp;&nbsp;&nbsp;务：<input name="title" type="text" />'+
 					  			'</p>'+
 					  			'<p>'+
-					  				'贡献率：<input name="contribution" type="text" value="0" readonly="readonly" />'+
+					  				'贡献率(%)：<input name="addContribution" type="text" value="20" />'+
 					  			'</p>'+
 					  		'</form>'+
 					  		'<p>'+
@@ -159,34 +160,99 @@ $(function(){
 
 		//确认添加
 		$(".addMember-sure").click(function(){
-			var contribution = $("#memberForm input[name='contribution']").val();
+			var contribution = $("#memberForm input[name='addContribution']").val();
 			var studentName = $("#memberForm input[name='studentName']").val();
 			var studentNo = $("#memberForm input[name='studentNo']").val();
 			var title = $("#memberForm input[name='title']").val();
-			$.ajax({
-				url : "/erpm/memberDetailAction!addMemberDetail.action",
-				type : "POST",
-				dataType:"json",
-				data :{
-					"contribution": contribution,
-					"studentName": studentName,
-					"studentNo": studentNo,
-					"title": title
-				},
-				success : function(data){   //请求成功
-					if(data.code == 1){
-						console.log(data);  //打印出后台返回数据
-						alert(data.result); 
-						window.location.reload();  //页面自动重新加载	
-					}else{
-						alert(data.result);
-					}				
-				},
-				error : function(){   //请求失败 
-					alert("请求失败");
-				}
-			})
+			var contributionNum = parseInt(contribution);
+			var len = $('.memberInfo-tr').length;
+			var studentNoReg = /[^\d{10}$]/g;
+			for(var i=0;i<len;i++){
+				contributionNum += parseInt($('input[name="contribution"]').eq(i).val());
+			}
+			if(contributionNum>100){
+				alert('贡献率之和不得大于100');
+			}else{
+				$.ajax({
+					url : "/erpm/memberDetailAction!addMemberDetail.action",
+					type : "POST",
+					dataType:"json",
+					data :{
+						"contribution": contribution,
+						"studentName": studentName,
+						"studentNo": studentNo,
+						"title": title
+					},
+					success : function(data){   //请求成功
+						if(data.code == 1){
+							alert(data.result); 
+							window.location.reload();  //页面自动重新加载	
+						}else{
+							alert(data.result);
+						}				
+					},
+					error : function(){   //请求失败 
+						alert("请求失败");
+					}
+				})
+			}
 		})
 	})
-	//点击删除
+
+	//点击修改成员信息
+	$('.changeMember').click(function(){
+		$('.memberInfo-tr input').attr('readonly',false);
+		$(this).attr('class','changeMember-sure');
+		$(this).html('保存修改');
+
+		//点击保存修改
+		var oldStudentNoList = [];
+		var len = $('.memberInfo-tr').length;
+		for(var i=0;i<len;i++){
+			oldStudentNoList.push($('.memberInfo-tr').eq(i).find("input[name='studentNo']").val());
+		}
+		$('.changeMember-sure').click(function(){
+			var contributionNum = 0;
+			for(var i=0;i<len;i++){
+				contributionNum += parseInt($('input[name="contribution"]').eq(i).val());
+			}
+			if(contributionNum>100){
+				alert('贡献率之和必须小于等于100');
+			}else{
+				var memberDetailList = [];
+				var data = {};
+				//var len = $('.memberInfo-tr').length;
+				for(var i=0;i<len;i++){
+					var contribution = $('.memberInfo-tr').eq(i).find("input[name='contribution']").val();
+					var studentName = $('.memberInfo-tr').eq(i).find("input[name='studentName']").val();
+					var studentNo = $('.memberInfo-tr').eq(i).find("input[name='studentNo']").val();
+					var title = $('.memberInfo-tr').eq(i).find("input[name='title']").val();
+					data["memberDetailList["+i+"].contribution"] = contribution;
+					data["memberDetailList["+i+"].studentName"] = studentName;
+					data["memberDetailList["+i+"].studentNo"] = studentNo;
+					data["memberDetailList["+i+"].title"] = title;
+					data["memberDetailList["+i+"].oldStudentNo"] = oldStudentNoList[i];
+				}
+				$.ajax({
+					url : "/erpm/memberDetailAction!updateMemberDetail.action",
+					type : "POST",
+					dataType:"json",
+					data:data,
+					success : function(res){  
+						if(res.code == 1){
+							alert(res.result); 
+							window.location.reload();  //页面自动重新加载
+						}else{
+							alert(res.result);
+							window.location.reload();
+						}				
+					},
+					error : function(){   //请求失败
+						alert("请求失败");
+					}
+				})
+			}
+		})
+
+	})
 })

@@ -41,6 +41,12 @@
 .setProp label{
 	margin-left: 60px;
 }
+
+/*一键确认*/
+.confirm{
+	font-weight: bold;
+
+}
 /*清除浮动*/
 .clear{
 	clear:both;

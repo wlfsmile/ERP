@@ -55,6 +55,12 @@ window.onload = function () {
         _this.setScore($(this));
       })
 
+      this.$table.on('click','.confirm',function(e){
+        //一键确认贡献率
+        e.preventDefault();
+        _this.confirm($(this));
+      })
+
       // 结束经营
       this.$table.on('click', '.gameover', function (e) {
         e.preventDefault();
@@ -316,8 +322,7 @@ window.onload = function () {
 
             $(items).each(function (index) {
               var tr = items[index];
-
-                    // 时间
+              // 时间
               var time = '';
               var currentYear;
               var currentPeriod;
@@ -375,7 +380,7 @@ window.onload = function () {
               }
 
               var opt;
-              table += '<tr data-mark="' + tr.userUnique + '">' +
+              table += '<tr data-mark="' + tr.userUnique + '"  data-name="'+ tr.groupName +'">' +
                     '<td>' + tr.userName + '</td>' +
                         '<td data-curyear="' + tr.currentPeriod + '" data-year="' + tr.year + '" data-peryear="' + tr.periodsOfOneYear + '">' +
                              time + '</td>' +
@@ -384,11 +389,11 @@ window.onload = function () {
                         '<td>' + orderText + '</td>' +
                         '<td>'+
                             '<a href="#" class="contribute"><span class="icon-contribute"></span>学生贡献度确认</a>'+
-                          '</td>'+
+                        '</td>'+
                         '</tr>';
+              var confirmStr = '';
             });
-
-            table += '</table>';
+            table += '<tr><td colspan="6" ><a href="#" class="confirm">一键确认贡献度</a></td></tr></table>';
             tr.find('>td').html(table);
           }
         }
@@ -486,7 +491,7 @@ window.onload = function () {
               $.post('/erpm/memberDetailAction!updateContribution.action',data,function(res){
                 if (res.code == 1) {
                   TIP(res.result, 'success', 2000);
-                  _this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
+                  //_this.table.loadData('gameGroupManagerAction!showGameGroups.action?rnd=' + Math.random(), 'GameGroups');
                 }
               },'json')
             });
@@ -606,7 +611,8 @@ window.onload = function () {
           $('.dialog-footer').html('<a class="btn j_excel" download="实验成绩单" href="#">导出为Excel</a><button class="btn j_cancel" href="#">取消</button>');
           $.post('/erpm/excelAction!download.action',data,function(res){
               if(res.status == 1){
-                 $('.j_excel').attr('href',res.path);
+                var excelPath = '/erpm/'+res.path
+                $('.j_excel').attr('href',excelPath);
               }else{
                 alert(res.message);
               }
@@ -615,6 +621,21 @@ window.onload = function () {
           alert(res.message);
         }
       },'json')
+    },
+
+    confirm : function(the){
+      var _this = this;
+      var tr = the.parent().parent().prev();
+      var groupName = tr.attr('data-name');
+      var data = {
+        gameName : groupName
+      };
+      DIALOG.confirm('是否一键确认该比赛所有组贡献度？',function(){
+        $.post('/erpm/memberDetailAction!confirmContribution.action',data,function(res){
+          console.log(res);
+          alert(res.result);
+        },'json')
+      })
     }
   };
 
