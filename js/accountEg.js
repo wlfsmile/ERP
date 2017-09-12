@@ -61,6 +61,11 @@ function jsonCallBack(data) {
 
     $(data.accountList).each(function (index) {
         var listDetail = data.accountList[index].accountDetailList;
+        list[index].accountIdDescription = translate1(list[index].accountIdDescription);
+        listDetail[0].itemType = translate3(listDetail[0].itemType);
+        listDetail[0].item = translate2(listDetail[0].item);
+        listDetail[1].itemType = translate3(listDetail[1].itemType);
+        listDetail[1].item = translate2(listDetail[1].item);
         var newAccount = '<tr>' +
             '<td rowspan="2">' + list[index].accountID + '</td>' +
             '<td rowspan="2">' + list[index].happenTime + '</td>' +
@@ -311,3 +316,75 @@ $(function () {
         }, jsonCallBack);
     });
 });
+function translate2(type){
+    switch(type)
+    {
+        case "现金":type="cash";break;
+        case "营业费用":type="Operating expenses";break;
+        case "累计折旧":type="Deprection Accumulated";break;
+        case "管理费用":type="manage expenses";break;
+        case "在制品":type="Producing product";break;
+        case "成品":type="producted product";break;
+        case "原材料":type="resource";break;
+        case "财务费用":type="financial expenses";break;
+        case "应收账款":type="Accounts receivable";break;
+        case "应交税金":type="tax receivable";break;
+        case "主营业务税金":type="Main business tax";break;
+        case "主营业务收入":type="Main business income";break;
+        case "产品":type="product";break;
+        case "主营业务成本":type="Main business cost";break;
+        case "在建工程":type="building project";break;
+        case "生产线":type="product line";break;
+    }
+    return type;
+};
+function translate1(type){
+    if(type.indexOf("归还")>=0)
+    {
+        var str = type.split("息");
+        if(str[0].indexOf("归还长期贷款利")>=0)
+        str[0] = "return longterm loan interest";
+        if (str[0].indexOf("归还长期贷款利")>=0)
+            str[0] = "return shortterm loan interest";
+        return str[0]+str[1];
+    }
+    switch(type)
+    {
+        case "投广告费":type="Advertising expense";break;
+        case "维护市场":type="Maintain the market";break;
+        case "开拓市场":type="Expand the market";break;
+        case "厂房维护":type="Plant maintenance";break;
+        case "厂房折旧":type="Depreciation of building";break;
+        case "生产线维护费":type="Maintenance cost of production line";break;
+        case "生产线折旧":type="Depreciation of product line";break;
+        case "产品生产完成":type="product finish";break;
+        case "采购原料入库":type="material bought into repository";break;
+        case "PRODUCT认证":type="PRODUCT Authentication";break;
+        case "产品研发":type="Product Develop";break;
+        case "安装生产线":type="set product line";break;
+        case "出售产品":type = "sell product";break;
+        case "应收账款到期":type ="Maturity of accounts receivable";break;
+        case "年末交纳主营业务税金":type="Pay tax at the end of the year";break;
+        case "年末交纳所得税":type="Pay the income tax at the end of the year";break;
+        case "申请长期贷款生效":type="apply longterm loan";break;
+        case "销售产品的营业税":type="sell product tax";break;
+        case "出售产品的成本核算":type="sell product cost caculate";break;
+        case "维护PRODUCT认证":type="maintain product authentication";break;
+        case "申请高利贷生效":type="apply high loan";break;
+        case "交纳厂房租赁费":type="submit factory renting cost";break;
+        case "生产产品":type="produce product";break;
+        case "生产线安装完工":type="product line finish";break;
+    }
+    return type;
+}
+
+function translate3(type){
+
+    switch(type)
+    {
+        case '借':type="lend";break;
+        case '贷':type="loan";break;
+    }
+    console.log(type);
+    return type;
+}

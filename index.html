@@ -6,13 +6,14 @@
   <title>ERP 沙盘虚拟运营系统</title>
   <link type="text/css" rel="stylesheet" href="css/base.css" />
   <link type="text/css" rel="stylesheet" href="css/welcome_login.css" />
-  <style> 
+  <style>
     .tips {
       text-align: right;
       color: grey;
     }
   </style>
   <script src="js/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="js/index01.js"></script>
   <script>
     $.ajaxSetup({ cache: false });
   </script>
@@ -22,7 +23,7 @@
 
   <div class="middle">
     <div class="middle_center same same_2"><span class="middle_welcome">欢迎登录</span></div>
-    
+
     <div class="middle_content login_content">
       <div class="left" id="page_index">
         <input type="text" name="username" class="left_username left_input" placeholder="用户名"><br>
@@ -41,7 +42,7 @@
               $(function () {
                   $.get('loginAction!clean.action?rnd=' + Math.random(), function () {
                   $('#sec')[0].innerHTML = '<img id="Verify" class="left_img" style="cursor: hand;" alt="看不清，换一张" >';
-                  
+
                   $('#Verify').attr('src', 'securityCodeImageAction.action?timestamp=' + new Date().getTime());
 
                   $('#Verify').on('click', function () {
@@ -64,10 +65,12 @@
         <p class="right_p1">还没有ERP虚拟系统账号？</p>
         <p class="right_p2">立即<a href="pages/registerlogin/welcome_register.html" class="right_register">去注册</a>!</p>
       </div>
+      <!-- 进入英文版本按钮 -->
+      <input type="button" value="Into the English version" class="englishButton" name="jump01">
     </div>
 
     <div class="bottom_shadow"></div>
-    
+
     <p class="tips">本系统在 Chrome 浏览器下体验更佳，<a href="chrome.exe">点击下载</a></p>
   </div>
 

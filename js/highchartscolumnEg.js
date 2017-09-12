@@ -1,5 +1,5 @@
 // JavaScript Document
-﻿$(function(){
+$(function(){
     // Set up the chart1
     var chart1 = new Highcharts.Chart({
 			// 表格总属性
@@ -34,7 +34,7 @@
 	        xAxis: {
 	            categories:['1', '2', '3','4','5','6','7','9','10'],
 				title:{
-					text: 'Period (years)',
+					text: 'Period',
 					style:{
                  fontWeight:"bold"
 				 }
@@ -106,7 +106,7 @@
 				gridLineWidth :1,// 默认是0，即在图上没有纵轴间隔线
 	            categories:['1', '2', '3','4','5','6','7','9','10'],
 				title:{
-					text: 'Period (years)',
+					text: 'Period',
 					style:{
                  fontWeight:"bold"
 				 }
@@ -118,7 +118,7 @@
 				// max:20,
 				// tickInterval:2.5, //刻度单位
 	            title: {
-	                text: 'selling price',
+	                text: 'price',
 					style:{
                   fontWeight:"bold"
 				  }
@@ -159,12 +159,21 @@
 			chart1.series[1].setData(data.mountMap.P2); 
 			chart1.series[2].setData(data.mountMap.P3); 
 			chart1.series[3].setData(data.mountMap.P4);
+			switch(data.marketName)
+			{
+				case "本地市场":data.marketName="Local Market";break;
+				case "国内市场":data.marketName="Domestic Market";break;
+				case "区域市场":data.marketName="Regional Market";break;
+				case "国际市场":data.marketName="International Market";break;
+				case "亚洲市场":data.marketName="Asia Market";break;
+			}
 			// 设置最大最小值
 			chart1.yAxis[0].setExtremes(data.mountMap.mountMin-1, data.mountMap.mountMax);
 			// 动态设置刻度值
 			chart1.yAxis[0].tickInterval=(data.mountMap.mountMax-data.mountMap.mountMin)/10;
 			chart1.setTitle({
-            text:data.marketName+'Demand forecast'
+
+            text:data.marketName+' Demand forecast'
             });
 			chart1.yAxis[0].update({
 		    tickInterval:chart1.yAxis[0].tickInterval,
@@ -188,7 +197,7 @@
 	  }
 	  
 	 // 默认本地市场
-	  $.post("predictionAction!findPrediction.action",{"marketName":"Local market"},function(data) { 
+	  $.post("predictionAction!findPrediction.action",{"marketName":"本地市场"},function(data) {
 		  getContent(data);
        },"json");
 	  
@@ -197,31 +206,31 @@
 	$(document).on("click","input[id='marketSearch']",function(){
 	  if($("select").val()=="local"){
 		  // 外部加载json
-		 $.post("predictionAction!findPrediction.action",{"marketName":"Local market"},function(data) { 
+		 $.post("predictionAction!findPrediction.action",{"marketName":"本地市场"},function(data) {
 		  getContent(data);
        },"json");
 	  }
 	  else if($("select").val()=="region"){
 		   // 外部加载json
-		 $.post("predictionAction!findPrediction.action",{"marketName":"Regional market"},function(data) { 
+		 $.post("predictionAction!findPrediction.action",{"marketName":"区域市场"},function(data) {
 		  getContent(data);
        },"json");
 	  }
 	  else if($("select").val()=="domestic"){
 		    // 外部加载json
-		 $.post("predictionAction!findPrediction.action",{"marketName":"Domestic market"},function(data) { 
+		 $.post("predictionAction!findPrediction.action",{"marketName":"国内市场"},function(data) {
 		  getContent(data);
        },"json");
 	  }
 	  else if($("select").val()=="Asia"){
 		    // 外部加载json
-		 $.post("predictionAction!findPrediction.action",{"marketName":"Asia market"},function(data) { 
+		 $.post("predictionAction!findPrediction.action",{"marketName":"亚洲市场"},function(data) {
 		  getContent(data);
        },"json");
 	  }
 	  else if($("select").val()=="international"){
 		    // 外部加载json
-		 $.post("predictionAction!findPrediction.action",{"marketName":"international market"},function(data) { 
+		 $.post("predictionAction!findPrediction.action",{"marketName":"国际市场"},function(data) {
 		  getContent(data);
        },"json");
 	  }

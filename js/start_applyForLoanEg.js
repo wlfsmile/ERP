@@ -1,7 +1,29 @@
 function load(data) {
+  switch (data.loanType){
+      case '长期贷款':
+        data.loanType = 'Long term loan';break;
+      case '短期贷款':
+        data.loanType = 'Short-term loans';break;
+      case '高利贷':
+        data.loanType = 'usury';break;
+  }
+
+  var warning;
+  switch (data.warning){
+      case '贷款金额必须在0.0万 - 64.0万之间！\n贷款期限必须为5年之内！':
+        warning = 'The loan amount must be between 0.0 million and 60.10 million ! \nThe loan term must less then 5 years'
+          break;
+      case '贷款金额必须在0.0万 - 104.0万之间！ \n贷款期限必须在4期之内！':
+        warning = 'The loan amount must be between 0.0 million and 100.30 million ! \nThe loan term must less then 4 years'
+        break;
+      case '贷款金额必须大于0.0万！贷款期限必须在4期之内！':
+        warning = 'The loan amount must be greater than 0.0 million ! The loan term must less then 4 years'
+        break;
+  }
+
   $('.thirdTd:eq(0)').text(data.loanType); // Type of loan
   $('.thirdTd:eq(1)').text(data.rate); // Annual interest rate
-  $('.loanP1').html(data.warning); // Red warning message
+  $('.loanP1').html(warning); // Red warning message
   $('#loanMoney').val(''); // Clear the amount of the loan amount
 
   // Blue description information
@@ -51,7 +73,7 @@ function load(data) {
 $(function () {
 	// Enter the page to initialize the long term loan information
   $.post('loanAction!isAllowLoan.action?rnd=' + Math.random(), {
-    'loanType': 'Long term loan'
+    'loanType': '长期贷款'
   }, load, 'json');
 
   $('#loanBtn').hover(function () {
@@ -63,9 +85,19 @@ $(function () {
 	// Click the query to load the message
   $('#loanType').on('click', function () {
     var selected = $(this).val();
+    //把参数转化成中文请求参数
+    var selected_java;
+    switch (selected){
+        case 'Long term loan':
+          selected_java = '长期贷款';break;
+        case 'Short-term loans':
+          selected_java = '短期贷款';break;
+        case 'usury':
+          selected_java = '高利贷';break;
+    }
 
     $.post('loanAction!isAllowLoan.action?rnd=' + Math.random(), {
-      'loanType': selected
+      'loanType': selected_java
     }, load, 'json');
   });
 
@@ -73,6 +105,16 @@ $(function () {
     var loanMoney = $('#loanMoney').val(); // loan amount
     var loanTime = $('#selectPeriod option:selected').text(); // Number of loans
     var loanType = $('.thirdTd').eq(0).text(); // Type of loan
+
+    var loanType_java;
+    switch (loanType){
+        case 'Long term loan':
+            loanType_java = '长期贷款';break;
+        case 'Short-term loans':
+            loanType_java = '短期贷款';break;
+        case 'usury':
+            loanType_java = '高利贷';break;
+    }
 
     // To determine whether the amount of the loan is reasonable, 
     // if it is unreasonable is the warning at the warning message, 
@@ -84,12 +126,12 @@ $(function () {
         $('.loanP1').text('Please enter an integer!');
       } else {
         $.post('loanAction!applyLoan.action?rnd=' + Math.random(), {
-          'loanType': loanType,
+          'loanType': loanType_java,
           'loanMoney': loanMoney,
           'loanTime': loanTime
         }, load, 'json');
 
-        alert('Loan success！\nApply to' + loanType + loanMoney + 'million, please' + loanTime + 'period to pay off');
+        alert('Loan success！\nApply to ' + loanType + ' '+ loanMoney + ' million, please ' + loanTime + ' period to pay off');
       }
     } else if (loanMoney <= 0) {
       $('.loanP1').text('The loan amount does not meet the conditions!');
@@ -97,11 +139,11 @@ $(function () {
       $('.loanP1').text('Please enter the number!');
     } else {
       $.post('loanAction!applyLoan.action?rnd=' + Math.random(), {
-        'loanType': loanType,
+        'loanType': loanType_java,
         'loanMoney': loanMoney,
         'loanTime': loanTime
       }, load, 'json');
-      alert('Loan success！\nApply to' + loanType + loanMoney + 'million, please' + loanTime + 'period to pay off');
+      alert('Loan success！\nApply to ' + loanType + ' '+  loanMoney + ' million, please ' + loanTime + ' period to pay off');
     }
   });
 });

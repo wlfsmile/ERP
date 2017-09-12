@@ -451,6 +451,7 @@ window.onload = function () {
       };
       $.post('/erpm/memberDetailAction!findAllInSameTeam.action',data,function(res){
         var contributeStr = '';
+        console.log(res);
         var resData = res.list;
         var len = resData.length;
         if(res.code == 1){
@@ -628,7 +629,7 @@ window.onload = function () {
       var tr = the.parent().parent().prev();
       var groupName = tr.attr('data-name');
       var data = {
-        gameName : groupName
+        groupName : groupName
       };
       DIALOG.confirm('是否一键确认该比赛所有组贡献度？',function(){
         $.post('/erpm/memberDetailAction!confirmContribution.action',data,function(res){

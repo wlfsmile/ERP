@@ -59,17 +59,17 @@ function loadPage(href) {
   $.get(href, function (data) {
     if (href === 'start_selectOrderEg.html') {
       $('.start_ads_content_left')[0].innerHTML = data;
-      $.getScript('../../js/start_selectOrder.js');
+      $.getScript('../../js/start_selectOrderEg.js');
     } else if (href === 'start_deliver_ads_affirmEg.html') {
       $('.start_ads_content_left')[0].innerHTML = data;
-      $.getScript('../../js/start_deliver_ads_affirm.js');
+      $.getScript('../../js/start_deliver_ads_affirmEg.js');
     } else if (href === 'start_deliver_ads_waitEg.html') {
       $('.start_ads_content_left')[0].innerHTML = data;
-      $.getScript('../../js/start_deliver_ads_wait.js');
+      $.getScript('../../js/start_deliver_ads_waitEg.js');
     } else if (href === 'start_choseOrderEg.html') {
       $('.start_ads_content_left')[0].innerHTML = data;
-      $.getScript('../../js/commonPop.js');
-      $.getScript('../../js/start_choseOrder.js');
+      $.getScript('../../js/commonPopEg.js');
+      $.getScript('../../js/start_choseOrderEg.js');
     } else {
       $('.start_ads_content_left')[0].innerHTML = data;
     }

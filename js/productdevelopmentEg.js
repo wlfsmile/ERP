@@ -98,13 +98,13 @@ show();
 		$(".develop_P1").find("h2").eq(4).text(data.developingProducts[i].beginTime);
 		if(data.developingProducts[i].status=='1')
 		{
-		$(".develop_P1").find("h2").eq(5).text("Under study");
-		$(".develop_P1").find("h2").eq(6).text("Pause research");
+		$(".develop_P1").find("h2").eq(5).text("Running");
+		$(".develop_P1").find("h2").eq(6).text("Pause");
 		}
 	   else if(data.developingProducts[i].status=='0')
 		{
-		$(".develop_P1").find("h2").eq(5).text("Pause research");
-		$(".develop_P1").find("h2").eq(6).text("Begin research");  
+		$(".develop_P1").find("h2").eq(5).text("Running");
+		$(".develop_P1").find("h2").eq(6).text("Pause");
 		}
 		
 		
@@ -148,13 +148,13 @@ show();
 		$(".develop_P2").find("h2").eq(4).text(data.developingProducts[i].beginTime);
 		if(data.developingProducts[i].status=='1')
 		{
-		$(".develop_P2").find("h2").eq(5).text("Under study");
-		$(".develop_P2").find("h2").eq(6).text("Pause research");	
+		$(".develop_P2").find("h2").eq(5).text("Running");
+		$(".develop_P2").find("h2").eq(6).text("Pause");
 		}
 	   else if(data.developingProducts[i].status=='0')
 		{
-		$(".develop_P2").find("h2").eq(5).text("Pause research");
-		$(".develop_P2").find("h2").eq(6).text("Begin research");  
+		$(".develop_P2").find("h2").eq(5).text("Pause");
+		$(".develop_P2").find("h2").eq(6).text("Running");
 		}
 		
 		
@@ -196,13 +196,13 @@ show();
 		$(".develop_P3").find("h2").eq(4).text(data.developingProducts[i].beginTime);
 		if(data.developingProducts[i].status=='1')
 		{
-		$(".develop_P3").find("h2").eq(5).text("Under study");
-		$(".develop_P3").find("h2").eq(6).text("Pause research");	
+		$(".develop_P3").find("h2").eq(5).text("Running");
+		$(".develop_P3").find("h2").eq(6).text("Pause");
 		}
 	   else if(data.developingProducts[i].status=='0')
 		{
-		$(".develop_P3").find("h2").eq(5).text("Pause research");
-		$(".develop_P3").find("h2").eq(6).text("Begin research");  
+		$(".develop_P3").find("h2").eq(5).text("Pause");
+		$(".develop_P3").find("h2").eq(6).text("Running");
 		}
 		
 		$("#state3").click(function(){
@@ -243,13 +243,13 @@ show();
 		$(".develop_P4").find("h2").eq(4).text(data.developingProducts[i].beginTime);
 		if(data.developingProducts[i].status=='1')
 		{
-		$(".develop_P4").find("h2").eq(5).text("Under study");
-		$(".develop_P4").find("h2").eq(6).text("Pause research");	
+		$(".develop_P4").find("h2").eq(5).text("Running");
+		$(".develop_P4").find("h2").eq(6).text("Pause");
 		}
 	   else if(data.developingProducts[i].status=='0')
 		{
-		$(".develop_P4").find("h2").eq(5).text("Pause research");
-		$(".develop_P4").find("h2").eq(6).text("Begin research");  
+		$(".develop_P4").find("h2").eq(5).text("Pause");
+		$(".develop_P4").find("h2").eq(6).text("Running");
 		}
 		$("#state4").click(function(){
 			//控制按钮切换
@@ -325,14 +325,14 @@ show();
 	var change1=function(_id,_current_btn,_current,_begin,current_btn,begin){
 	  if($(_id).hasClass(current_btn))//暂停研发
 	  { 
-		 $(_current).empty().append("<h2>Pause research</h2>");
-		 $(_current_btn).empty().append("<h2>Begin research</h2>");
+		 $(_current).empty().append("<h2>Pause</h2>");
+		 $(_current_btn).empty().append("<h2>research</h2>");
 		 $(_id).removeClass(current_btn).addClass(begin);
 	  }
 	  else if($(_id).hasClass(begin))//继续研发  
 	  {
-		 $(_current).empty().append("<h2>Under study</h2>");
-		 $(_begin).empty().append("<h2>Pause research</h2>");
+		 $(_current).empty().append("<h2>Running</h2>");
+		 $(_begin).empty().append("<h2>Pause</h2>");
 		 $(_begin).removeClass(begin).addClass(current_btn);
 	  }
 		  
@@ -343,14 +343,14 @@ show();
 	var change0=function(_id,_current_btn,_current,_begin,current_btn,begin){
 		  if($(_id).hasClass(current_btn))//暂停研发
 		  { 
-			 $(_current).empty().append("<h2>Under study</h2>");
-			 $(_current_btn).empty().append("<h2>Pause research</h2>");
+			 $(_current).empty().append("<h2>Running</h2>");
+			 $(_current_btn).empty().append("<h2>Pause</h2>");
 			 $(_id).removeClass(current_btn).addClass(begin);
 		  }
 		  else if($(_id).hasClass(begin))//继续研发  
 		  {
-			 $(_current).empty().append("<h2>Pause research</h2>");
-			 $(_begin).empty().append("<h2>Begin research</h2>");
+			 $(_current).empty().append("<h2>Pause</h2>");
+			 $(_begin).empty().append("<h2>Begin</h2>");
 			 $(_begin).removeClass(begin).addClass(current_btn);
 		  }
 	 //控制按钮0切换结束

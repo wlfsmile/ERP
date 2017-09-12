@@ -100,10 +100,10 @@
   height: auto;
 }
 .right_p1{
-	/*margin-top:20px;*/
+	margin-top:-20px;
 }
 .right_p2{
-	/*margin-top:20px;*/
+	margin-top:-1px;
 }
 .right_register{
 	font-size:23px;
@@ -117,24 +117,24 @@
 }
 /*进入英文按钮*/
 .englishButton{
-    width:260px;
+	width:270px;
 	height:37px;
 	background:#369;
 	border:0px;
 	font:normal 16px "微软雅黑";
-	margin-top:80px;
+	margin-top:60px;
 	margin-left:65px;
 	color:#fff;
 	cursor:pointer;
 }
 /*进入中文按钮*/
 .ChineseButton{
-    width:260px;
+	width:260px;
 	height:37px;
 	background:#369;
 	border:0px;
 	font:normal 16px "微软雅黑";
-	margin-top:80px;
+	margin-top:60px;
 	margin-left:65px;
 	color:#fff;
 	cursor:pointer;

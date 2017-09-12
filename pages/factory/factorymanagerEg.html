@@ -30,16 +30,16 @@
 	<!--Choose the market, select the state-->
     <div class="choose font2">
 	    <div class="choose_status">
-        <span>Please select the status：</span>
+        <span> status：</span>
 	   <select name="workshopStatus">
 		    <option class="haha" value="allStatus" selected="selected">all</option>
-		    <option class="haha" value="building">Under construction</option>
+		    <option class="haha" value="building">construction</option>
 		    <option class="haha" value="rent">Rented</option>
 		    <option class="haha" value="built">Built</option>
 	    </select>
 		</div>
 		<div class="choose_market">
-	    <span>Please choose the market：</span>
+	    <span> market：</span>
 	    <select name="marketArea">
 	    	<option class="haha" value="allStatus" selected="selected">all</option>
 		    <option class="haha" value="local">Local market</option>
@@ -52,7 +52,7 @@
 		<div class="btn">
 	    <input type="button" name="search" value="Inquire" class="search_btn bg1"/>
 		<input type="button" name="createWorkshop" value="New plant" class="create_btn space1 main_a table" />
-		<input type="button" name="rentWorkshop" value="Rent the plant" class="rent_btn space2 main_a table1" />
+		<input type="button" name="rentWorkshop" value="Rent plant" class="rent_btn space2 main_a table1" />
 		</div>
     </div>
     <!--Plant-->
@@ -62,14 +62,14 @@
 	        <div class="bg3">
 	        <dt class="down"><img src="../../images/factory/down_btn2.gif" class="down_btn"/>
 		        <img src="../../images/factory/made.jpg" class="shop"/></dt>
-		    <dt class="status"><p>status</p><span>Has been completed</span></dt>
+		    <dt class="status"><p>Status</p><span>Finished</span></dt>
 		    <dt class="workshop_id"><p>Plant number</p><span>MAK009</span></dt>
-		    <dt class="market_area"><p>Where the market</p><span class="market">Local market</span></dt>
+		    <dt class="market_area"><p>Market</p><span class="market">Local market</span></dt>
 		    <dt class="workshop_type"><p>Plant type</p><span>Large plant</span></dt>
 		    <dt class="restvalue"><p>Residual value</p><span>0.0</span></dt>
-		    <dt class="buildtime"><p>opening hour</p><span>1</span></dt>
-		    <dt class="builttime"><p>Completion Time</p><span class="finished">1</span></dt>
-		    <dt class="workline_num"><p>Number of production lines</p>
+		    <dt class="buildtime"><p>StartTime</p><span>1</span></dt>
+		    <dt class="builttime"><p>ComTime</p><span class="finished">1</span></dt>
+		    <dt class="workline_num"><p>Number of lines</p>
 		        <div><span class="currentLine">4</span>/<span class="totalLine">6</span>
 			    <input type="button" name="add" class="add_line" /></div></dt>
 		    <dt class="operateFactory">
@@ -79,9 +79,9 @@
 		    <!--Production lines in the delivery room-->
 	        <dd class="workline" id="hiddenLine">
 	            <div class="lineType manuLine"><img src="../../images/factory/131765.jpg" /><span>Manual production line</span></div>
-		        <div class="lineStatus font2">state：<span>in production</span></div>
+		        <div class="lineStatus font2">state：<span>production</span></div>
 				<div class="finishedPeriod font2">Completed cycle：<span>1</span></div>
-		        <div class="workingPro font2">Is producing products：<span>P1</span></div>
+		        <div class="workingPro font2">product：<span>P1</span></div>
 		        <div class="operateLine"><input type="button" name="examine" class="bg1" value="To view" />
 		        <input type="button" name="changePro" class="bg1" value="Conversion" disabled="disabled"/>
 		        <input type="button" name="configure" class="bg1" value="Configuration" />
@@ -96,16 +96,16 @@
 	        <div class="bg3">
 	        <dt class="down"><img src="../../images/factory/down_btn2.gif" class="down_btn"/>
 		        <img src="../../images/factory/making.jpg" class="shop"/></dt>
-		    <dt class="status"><p>state</p><span>In construction</span></dt>
+		    <dt class="status"><p>state</p><span>construction</span></dt>
 		    <dt class="workshop_id"><p>Plant number</p><span>MAK009</span></dt>
-		    <dt class="market_area"><p>Where the market</p><span class="market">Local market</span></dt>
+		    <dt class="market_area"><p>market</p><span class="market">Local market</span></dt>
 		    <dt class="workshop_type"><p>Plant type</p><span>Large plant</span></dt>
-		    <dt class="paytype"><p>Construction of the payment method</p><span>Pay the construction funds on schedule</span></dt>
-		    <dt class="buildtime"><p>opening hour</p><span>1</span></dt>
-		    <dt class="builttime"><p>The construction cycle has been completed</p><span class="finishedPeriod">3</span></dt>
+		    <dt class="paytype"><p>paymentMethod</p><span>Pay funds schedule</span></dt>
+		    <dt class="buildtime"><p>start time</p><span>1</span></dt>
+		    <dt class="builttime"><p>cycle completed</p><span class="finishedPeriod">3</span></dt>
 		    <dt class="workline_num">
-			    <div  class="buildPerioud"><p>Total construction period</p><span>4</span></div>
-				<div  class="lines"><p>Can accommodate the production line</p><span class="totalLine">6</span></div></dt>
+			    <div  class="buildPerioud"><p>TotalPeriod</p><span>4</span></div>
+				<div  class="lines"><p>lineSize</p><span class="totalLine">6</span></div></dt>
 		    <dt class="operateFactory"><input type="button" value="Suspension of construction" name="building" class="building bg1" /></dt>
 		    </div>
 		</dl>
@@ -134,17 +134,17 @@
 	        <select name="choosePro">
 	        </select>
 	    </div>
-	    <input type="button" name="confirmChange" value="Confirm conversion" class="confirmChange bg2" />
+	    <input type="button" name="confirmChange" value="Confirm" class="confirmChange bg2" />
 	</div>
 	<div class="line_common configure bg4">
 		<div class="btns">
-		<p><input type="button" name="stopInstall" value="Pause the installation" class="bg2"/></p>
-	    <p><input type="button" name="restartInstall" value="Resume installation" class="bg2"/></p>
-		<p><input type="button" name="stopWork" value="stop production" class="bg2"/></p>
-	    <p><input type="button" name="restartWork" value="To resume production" class="bg2"/></p>
-	    <p><input type="button" name="startWork" value="Start production" class="bg2"/></p>
-	    <p><input type="button" name="stopChange" value="Suspension of conversion" class="bg2"/></p>
-	    <p><input type="button" name="restartChange" value="Resume conversion" class="bg2"/></p>
+		<p><input type="button" name="stopInstall" value="Pause" class="bg2"/></p>
+	    <p><input type="button" name="restartInstall" value="installation" class="bg2"/></p>
+		<p><input type="button" name="stopWork" value="stop" class="bg2"/></p>
+	    <p><input type="button" name="restartWork" value="production" class="bg2"/></p>
+	    <p><input type="button" name="startWork" value="Ready" class="bg2"/></p>
+	    <p><input type="button" name="stopChange" value="Suspension" class="bg2"/></p>
+	    <p><input type="button" name="restartChange" value="conversion" class="bg2"/></p>
 	    </div>
 	</div>
 </div>

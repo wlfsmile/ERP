@@ -52,7 +52,7 @@ $(function () {
       var groupName = data.groupName.substr(0, 5) + '...';
 
       $('#userName').text(data.username);
-      $('#currentTime').text('No.' + data.year + 'year，No.' + data.period + 'phase');
+      $('#currentTime').text(data.year + ' year , ' + data.period + ' phase');
       $('.tab_td3 img').attr('src', '../../images/pic_meb' + j + '.jpg');
       $('.profile p').eq(0).children().html(groupName);
       $('.profile p').eq(1).children().html(data.money);
@@ -215,7 +215,7 @@ $(function () {
 
     var html = [
       '<p class="common popupFont font_color">',
-      'Is that the end of the operation?</p>',
+      'Is end of the operation?</p>',
       '<p class="enter_p2 common">',
       '<input type="button" value="confirm" id="exitAll" class="sureBtn common_1 exitBgcolor common_border common_color" /></p>'
     ].join('');
@@ -225,7 +225,7 @@ $(function () {
     $('#exitAll').on('click', function () {
       $.get('gameGroupMemberAction!exitGame.action?rnd=' + Math.random(), function (status) {
         if (status === '1') {
-          window.location.href = '../../index.html';
+          window.location.href = '../../indexeg.html';
         } else {
           alert('Please be patient and all players finish advertising...');
           window.location.reload();

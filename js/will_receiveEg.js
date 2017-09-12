@@ -1,4 +1,4 @@
-﻿$(function(){
+$(function(){
     
 	$.get("willReceiveAction!findWillReceive.action?rnd="+Math.random(),null,function(data){
 	    $(".balance_table tbody td").empty();
@@ -27,7 +27,7 @@
 		if (ok) {
 			var id=$(this).parents("tr").children("td").eq(0).text();  //应收账款编号
 		    $.post("willReceiveAction!discount.action?rnd="+Math.random(),{"willReceiveID":id},function(){
-		    	location.href="will_receive.html";
+		    	location.href="will_receiveEg.html";
 			    $(this).parents("tr").remove();
 		    });  //传编号
 		}else{

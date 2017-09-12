@@ -102,7 +102,7 @@
 	border:1px solid #ccc;
 }
 .orderInfor input{
-	width:60px;
+	width:69px;
 	border:0px;
 	background:#DBDAD6;
 	margin-right:10px;
@@ -207,7 +207,7 @@
 	width:40px;
 	margin-left:4px;
 	border:0px;
-	padding-left:10px;
+	padding-left:4px;
 	padding-right:10px;
 	word-wrap:break-word;
 	float:left;
@@ -245,7 +245,7 @@
 	border:0px;
 	}/*#btn3在start_selectOrder.html里*/
 #btn2{
-	width:193px;
+	width:200px;
     height:31px;
 	float:right;
 	margin-right:15px;
@@ -287,7 +287,7 @@
 /*位置不可随意调动，与前面有共用部分,有些重新覆盖了前面定义的,写JS时要重新加上ID，避免冲突*/
 .ads_affirm_left{min-height:450px;}/*位置不可随意调动，重新覆盖了前面定义的高度*/
 .ads_affirm_div{width:775px;}
-.ads_affirm_div input{width:193px;height:30px; border:0px;color:#FFF;}
+.ads_affirm_div input{width:200px;height:30px; border:0px;color:#FFF;}
 .affirm_btn1{padding-left:15px; text-align:left;}
 .affirm_btn1:hover{ background:#d1ba74; cursor:pointer; }
 .affirm_btn2{padding-right:15px; text-align:right;}
@@ -353,7 +353,7 @@
 	margin-top:5px;
 }
 #btn5{
-    width:160px;
+    width:180px;
 	margin-right:50px;
 	margin-top:5px;
 }

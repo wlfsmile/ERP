@@ -1,4 +1,4 @@
-﻿$(function(){
+$(function(){
     $.registerCheck();
 });
 $.extend({
@@ -10,7 +10,7 @@ $.extend({
             $str.next().empty().append('<img src="../../images/checked.gif" />').css("padding-left","8px");
         };
         var showError=function($str){
-    	    var temp='Please enter it correctly'+$str.parents('tr').find('.space').text();
+    	    var temp='Please enter correctly'+$str.parents('tr').find('.space').text();
     	    temp=temp.replace(/\s+/g,"");
 	        $str.next().empty().append(temp).css("color","orange").css("padding-left","8px");
         };

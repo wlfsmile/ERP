@@ -125,7 +125,7 @@ $(document).ready(function(){
 	    
 		//清空表格内容
 		$(".loan_table tbody td").empty();
-		
+
 	    $(data.loanList).each(function(index){
 		    var loanTr=$(".loan_table tbody tr").eq(index);
 			$(loanTr).find("td").eq(0).text(data.loanList[index].loanID);

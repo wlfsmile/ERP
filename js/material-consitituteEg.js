@@ -106,10 +106,10 @@ $(document).ready(function(){
 	
 	
   //成本价
-  	$(".P1").find("span").eq(5).text(data.P1Cost price);
-	$(".P2").find("span").eq(5).text(data.P2Cost price);
-	$(".P3").find("span").eq(5).text(data.P3Cost price);
-	$(".P4").find("span").eq(5).text(data.P4Cost price);
+  	$(".P1").find("span").eq(5).text(data.P1成本价);
+	$(".P2").find("span").eq(5).text(data.P2成本价);
+	$(".P3").find("span").eq(5).text(data.P3成本价);
+	$(".P4").find("span").eq(5).text(data.P4成本价);
 	
 	  	     
 	//遍历产品构成结束	  

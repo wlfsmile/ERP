@@ -129,7 +129,7 @@ $(document).ready(function(){
 	    $(data.loanList).each(function(index){
 		    var loanTr=$(".loan_table tbody tr").eq(index);
 			$(loanTr).find("td").eq(0).text(data.loanList[index].loanID);
-			$(loanTr).find("td").eq(1).text(data.loanList[index].loanTypeName);
+			$(loanTr).find("td").eq(1).text(toEnglish(data.loanList[index].loanTypeName));
 			$(loanTr).find("td").eq(2).text(data.loanList[index].beginTime);
 			$(loanTr).find("td").eq(3).text(data.loanList[index].endTime);
 			$(loanTr).find("td").eq(4).text(data.loanList[index].money);
@@ -154,17 +154,53 @@ $(document).ready(function(){
 	}
 	
 	//One up to load
-    $.post("returnLoanAction!findLoan.action",{"loanType":"Long term loan","loanStatus":"Not repayment"},jsonCallBack,"json");
+	//请求参数要为中文，不要修改 hyx
+    $.post("returnLoanAction!findLoan.action",{"loanType":"长期贷款","loanStatus":"未还贷款"},jsonCallBack,"json");
 	
 	
 	
 	//Query operation
 	$(".search_btn").click(function(){
 	    var type=$("select[name='loan_type'] option:selected").text();
+	    //切换成中文请求参数
+	    var type_java = '长期贷款';
+	    switch (type){
+			case 'Long term loan':
+			    type_java = '长期贷款';break;
+			case 'Short-term loans':
+			    type_java = '短期贷款';break;
+			case 'usury':
+			    type_java = '高利贷';break;
+			case 'all':
+			    type_java = '全部';break;
+		}
 		var status=$("select[name='loan_status'] option:selected").text();
-	    $.post("returnLoanAction!findLoan.action",{"loanType":type,"loanStatus":status},jsonCallBack,"json");
+	    var status_java;
+		switch (status){
+			case 'Not repayment':
+			    status_java = '未还贷款';break;
+			case 'Already repayment':
+			    status_java = '已还贷款';break;
+			case 'all':
+			    status_java = '全部';break;
+		}
+	    $.post("returnLoanAction!findLoan.action",{"loanType":type_java,"loanStatus":status_java},jsonCallBack,"json");
 	});
 });
+
+
+
+function toEnglish(loanType_chinese) {
+    switch (loanType_chinese){
+        case '长期贷款' :
+            return 'Long term loan';
+        case '短期贷款' :
+            return 'Short-term loans';
+        case '高利贷' :
+            return 'usury';
+    }
+
+}
 </script>
 </body>
 </html>

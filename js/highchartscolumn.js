@@ -1,5 +1,5 @@
 // JavaScript Document
-﻿$(function(){
+$(function(){
     // Set up the chart1
     var chart1 = new Highcharts.Chart({
 			// 表格总属性

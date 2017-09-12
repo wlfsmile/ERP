@@ -43,7 +43,7 @@ body{
 .content .choose{
     height:34px;
     margin-top:16px;
-	margin-bottom:16px;
+	margin-bottom:35px;
 	padding-left:6px;
 	/*兼容IE6*/
 	*margin-top:16px;
@@ -156,6 +156,7 @@ body{
     color:#999;
 	font-size:14px;
 	padding-top:6px;
+	padding-bottom: 5px;
 }
 .workshop_info span{
     color:#000;
@@ -214,6 +215,14 @@ body{
 .workline input{
 	font-size:15px;
     width:63px;
+	height:28px;
+	border:none;
+	margin-left:10px;
+	cursor:pointer;
+}
+.workline configuration{
+	font-size:15px;
+	width:95px;
 	height:28px;
 	border:none;
 	margin-left:10px;

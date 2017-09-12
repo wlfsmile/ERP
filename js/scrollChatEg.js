@@ -46,13 +46,13 @@ function sendMessage() {
   var content = $input.val();
 
   if (content === '') {
-    $input.val('Send message can not be empty');
+    $input.val('message cannot be empty');
 
     $input.on('click', function () {
-      if ($(this).val() === 'Send message can not be empty') $(this).val('');
+      if ($(this).val() === 'message cannot be empty') $(this).val('');
     });
   } else if (content.length > 25) {
-    alert('Send messages can not exceed 25 characters');
+    alert('messages cannot exceed 25 characters');
   } else if (content !== 'Send message can not be empty') {
     $.post('chatAction!addChat.action?rnd=' + Math.random(), {
       'record': content

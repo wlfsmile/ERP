@@ -59,7 +59,7 @@ $(function () {
       // 创建外面的框
       $(newDiv).clone(true).appendTo('.undevelop_ISO');
 
-      if (data.isoUndevelopList[i].isoName == 'PRODUCT9000Quality Certification') {
+      if (data.isoUndevelopList[i].isoName == 'PRODUCT9000质量认证') {
         // 设置class
         $('.img_ISO').removeClass().addClass('img_ISO1');
         $('.ISO').removeClass().addClass('market-bar ISO1');
@@ -67,13 +67,15 @@ $(function () {
         $('#un_state').removeAttr('id', 'un_state2').attr('id', 'un_state1');
 
         // 传值
-        $('.ISO1').find('h2').eq(0).text(data.isoUndevelopList[i].isoName);
+        //  修改iso显示的名字
+        var isoName  =  data.isoUndevelopList[i].isoName.substring(0,data.isoUndevelopList[i].isoName.length-4);
+        $('.ISO1').find('h2').eq(0).text(isoName);
         $('.ISO1').find('h2').eq(1).text(data.isoUndevelopList[i].researchPeriod);
         $('.ISO1').find('h2').eq(2).text(data.isoUndevelopList[i].researchCost);
         $('.ISO1').find('h2').eq(3).text(data.isoUndevelopList[i].maintainCost);
       }
 
-      if (data.isoUndevelopList[i].isoName == 'PRODUCT1400Quality Certification') {
+      if (data.isoUndevelopList[i].isoName == 'PRODUCT1400质量认证') {
         // 设置class
         $('.img_ISO').removeClass().addClass('img_ISO2');
         $('.ISO').removeClass().addClass('market-bar ISO2');
@@ -81,7 +83,9 @@ $(function () {
         $('#un_state').removeAttr('id', 'un_state1').attr('id', 'un_state2');
 
         // 传值
-        $('.ISO2').find('h2').eq(0).text(data.isoUndevelopList[i].isoName);
+        //  修改iso显示的名字
+        var isoName  =  data.isoUndevelopList[i].isoName.substring(0,data.isoUndevelopList[i].isoName.length-4);
+        $('.ISO2').find('h2').eq(0).text(isoName);
         $('.ISO2').find('h2').eq(1).text(data.isoUndevelopList[i].researchPeriod);
         $('.ISO2').find('h2').eq(2).text(data.isoUndevelopList[i].researchCost);
         $('.ISO2').find('h2').eq(3).text(data.isoUndevelopList[i].maintainCost);
@@ -92,7 +96,7 @@ $(function () {
     $.each(data.isoDevelopingList, function (i) {
       $(createDiv).clone(true).appendTo('.develop_ISO');
 
-      if (data.isoDevelopingList[i].isoName == 'PRODUCT9000Quality Certification') {
+      if (data.isoDevelopingList[i].isoName == 'PRODUCT9000质量认证') {
         // 设置class
         $('.img_ISOing').removeClass().addClass('img_ISOing1');
         $('<img src="../../images/9000.gif">').appendTo('.img_ISOing1');
@@ -103,7 +107,8 @@ $(function () {
         $('#current1').removeClass().addClass('current1'); // 控制按钮切换
 
         // 传值
-        $('.develop_ISO1').find('h2').eq(0).text(data.isoDevelopingList[i].isoName);
+        var isoName = data.isoDevelopingList[i].isoName.substring(0,data.isoDevelopingList[i].isoName.length-4);
+        $('.develop_ISO1').find('h2').eq(0).text(isoName);
         $('.develop_ISO1').find('h2').eq(1).text(data.isoDevelopingList[i].researchPeriod);
         $('.develop_ISO1').find('h2').eq(2).text(data.isoDevelopingList[i].researchCost);
         $('.develop_ISO1').find('h2').eq(3).text(data.isoDevelopingList[i].finishedPeriod);
@@ -111,11 +116,11 @@ $(function () {
 
         if (data.isoDevelopingList[i].status == '1') {
           $('.develop_ISO1').find('h2').eq(5).text('Developing');
-          $('.develop_ISO1').find('h2').eq(6).text('Suspend development');
+          $('.develop_ISO1').find('h2').eq(6).text('Suspend');
 
           $('#state1').click(function () {
             $.post('isoManageAction!updateISODevelopingStatusToZero.action?rnd=' + Math.random(), {
-              'isoName': 'PRODUCT9000Quality Certification'
+              'isoName': 'PRODUCT9000质量认证'
             }, function () {
               show();
             });
@@ -123,12 +128,12 @@ $(function () {
         }
 
         if (data.isoDevelopingList[i].status == '0')	{
-          $('.develop_ISO1').find('h2').eq(5).text('Suspend development');
-          $('.develop_ISO1').find('h2').eq(6).text('Began to develop');
+          $('.develop_ISO1').find('h2').eq(5).text('Suspend');
+          $('.develop_ISO1').find('h2').eq(6).text('develop');
 
           $('#state1').click(function () {
             $.post('isoManageAction!updateISODevelopingStatusToOne.action?rnd=' + Math.random(), {
-              'isoName': 'PRODUCT9000Quality Certification'
+              'isoName': 'PRODUCT9000质量认证'
             }, function () {
               show();
             });
@@ -147,7 +152,7 @@ $(function () {
         });
       }
 
-      if (data.isoDevelopingList[i].isoName == 'PRODUCT1400Quality Certification') {
+      if (data.isoDevelopingList[i].isoName == 'PRODUCT1400质量认证') {
         // 设置class
         $('.img_ISOing').removeClass().addClass('img_ISOing2');
         $('<img src="../../images/1400.gif">').appendTo('.img_ISOing2');
@@ -158,7 +163,8 @@ $(function () {
         $('#current2').removeClass().addClass('current2'); // 控制按钮切换
 
         // 传值
-        $('.develop_ISO2').find('h2').eq(0).text(data.isoDevelopingList[i].isoName);
+        var isoName = data.isoDevelopingList[i].isoName.substring(0,data.isoDevelopingList[i].isoName.length-4);
+        $('.develop_ISO2').find('h2').eq(0).text(isoName);
         $('.develop_ISO2').find('h2').eq(1).text(data.isoDevelopingList[i].researchPeriod);
         $('.develop_ISO2').find('h2').eq(2).text(data.isoDevelopingList[i].researchCost);
         $('.develop_ISO2').find('h2').eq(3).text(data.isoDevelopingList[i].finishedPeriod);
@@ -166,11 +172,11 @@ $(function () {
 
         if (data.isoDevelopingList[i].status == '1') {
           $('.develop_ISO2').find('h2').eq(5).text('Developing');
-          $('.develop_ISO2').find('h2').eq(6).text('Suspend development');
+          $('.develop_ISO2').find('h2').eq(6).text('Suspend');
 
           $('#state2').click(function () {
             $.post('isoManageAction!updateISODevelopingStatusToZero.action?rnd=' + Math.random(), {
-              'isoName': 'PRODUCT1400Quality Certification'
+              'isoName': 'PRODUCT1400质量认证'
             }, function () {
               show();
             });
@@ -178,12 +184,12 @@ $(function () {
         }
 
         if (data.isoDevelopingList[i].status == '0') {
-          $('.develop_ISO2').find('h2').eq(5).text('Suspend development');
-          $('.develop_ISO2').find('h2').eq(6).text('Began to develop');
+          $('.develop_ISO2').find('h2').eq(5).text('Suspend');
+          $('.develop_ISO2').find('h2').eq(6).text('develop');
 
           $('#state2').click(function () {
             $.post('isoManageAction!updateISODevelopingStatusToOne.action?rnd=' + Math.random(), {
-              'isoName': 'PRODUCT1400Quality Certification'
+              'isoName': 'PRODUCT1400质量认证'
             }, function () {
               show();
             });
@@ -205,7 +211,7 @@ $(function () {
 
     // 已经完成的 ISO 认证
     $.each( data.isoDevelopedList, function (i) {
-      if (data.isoDevelopedList[i].isoName == 'PRODUCT9000Quality Certification') {
+      if (data.isoDevelopedList[i].isoName == 'PRODUCT9000质量认证') {
         $('.img_f1').css('display', 'none');
 
         if (data.isoDevelopedList[i].status == 1) {
@@ -219,12 +225,13 @@ $(function () {
         }
 
         // 悬浮框内展示的内容
+        var isoName = data.isoDevelopedList[i].isoName.substring(0,data.isoDevelopedList[i].isoName.length-4);
         $('.suspension1').find('span').eq(0)
-          .text('ISOname：' + data.isoDevelopedList[i].isoName)
+          .text('ISOname：' + isoName)
           .css('font-weight', 'bold');
 
-        $('.suspension1').find('span').eq(1).text('Starting time：' + data.isoDevelopedList[i].beginTime);
-        $('.suspension1').find('span').eq(2).text('End Time：' + data.isoDevelopedList[i].endTime);
+        $('.suspension1').find('span').eq(1).text('Starting：' + data.isoDevelopedList[i].beginTime);
+        $('.suspension1').find('span').eq(2).text('EndTime：' + data.isoDevelopedList[i].endTime);
 
         if (data.isoDevelopedList[i].lastStatus == 0) {
           $('.suspension1').find('span').eq(3).text('Last week maintenance status: Not maintained');
@@ -237,7 +244,7 @@ $(function () {
         $('.suspension1').find('span').eq(4).text('Maintenance costs：' + data.isoDevelopedList[i].maintainCost);
       }
 
-      if (data.isoDevelopedList[i].isoName == 'PRODUCT1400Quality Certification') {
+      if (data.isoDevelopedList[i].isoName == 'PRODUCT1400质量认证') {
         $('.img_f2').css('display', 'none');
 
         if (data.isoDevelopedList[i].status == 1) {
@@ -250,12 +257,13 @@ $(function () {
           $(createImgM2).clone(true).appendTo('.small_div2');
         }
 
+        var isoName = data.isoDevelopedList[i].isoName.substring(0,data.isoDevelopedList[i].isoName.length-4);
         // 悬浮框内展示的内容
         $('.suspension2').find('span').eq(0)
-          .text('ISOname：' + data.isoDevelopedList[i].isoName)
+          .text('ISOname：' + isoName)
           .css('font-weight', 'bold');
-        $('.suspension2').find('span').eq(1).text('Starting time：' + data.isoDevelopedList[i].beginTime);
-        $('.suspension2').find('span').eq(2).text('End Time：' + data.isoDevelopedList[i].endTime);
+        $('.suspension2').find('span').eq(1).text('Starting：' + data.isoDevelopedList[i].beginTime);
+        $('.suspension2').find('span').eq(2).text('EndTime：' + data.isoDevelopedList[i].endTime);
 
         if (data.isoDevelopedList[i].lastStatus == 0) {
           $('.suspension2').find('span').eq(3).text('Last week maintenance status: Not maintained');
@@ -286,15 +294,15 @@ $(function () {
     var change1 = function (_id, _current_btn, _current, _begin, current_btn, begin) {
       if ($(_id).hasClass(current_btn)) {
         // 暂停研发
-        $(_current).empty().append('<h2>Suspend development</h2>');
-        $(_current_btn).empty().append('<h2>Began to develop</h2>');
+        $(_current).empty().append('<h2>Suspend</h2>');
+        $(_current_btn).empty().append('<h2>develop</h2>');
         $(_id).removeClass(current_btn).addClass(begin);
       }
 
       if ($(_id).hasClass(begin)) {
         // 继续研发
         $(_current).empty().append('<h2>Developing</h2>');
-        $(_begin).empty().append('<h2>Suspend development</h2>');
+        $(_begin).empty().append('<h2>Suspend</h2>');
         $(_begin).removeClass(begin).addClass(current_btn);
       }
     };
@@ -304,15 +312,15 @@ $(function () {
       if ($(_id).hasClass(current_btn)) {
         // 暂停研发
         $(_current).empty().append('<h2>Developing</h2>');
-        $(_current_btn).empty().append('<h2>Suspend development</h2>');
+        $(_current_btn).empty().append('<h2>Suspend</h2>');
         $(_id).removeClass(current_btn).addClass(begin);
       }
 
       if ($(_id).hasClass(begin)) {
         // 继续研发
 
-        $(_current).empty().append('<h2>Suspend development</h2>');
-        $(_begin).empty().append('<h2>Began to develop</h2>');
+        $(_current).empty().append('<h2>Suspend</h2>');
+        $(_begin).empty().append('<h2>develop</h2>');
         $(_begin).removeClass(begin).addClass(current_btn);
       }
     };
@@ -320,7 +328,7 @@ $(function () {
     // 各种按钮事件
     $('#un_state1').click(function () {
       $.post('isoManageAction!addISOToISODeveloping.action?rnd=' + Math.random(), {
-        'isoName': 'PRODUCT9000Quality Certification'
+        'isoName': 'PRODUCT9000质量认证'
       }, function () {
         show();
       });
@@ -328,7 +336,7 @@ $(function () {
 
     $('#un_state2').click(function () {
       $.post('isoManageAction!addISOToISODeveloping.action?rnd=' + Math.random(), {
-        'isoName': 'PRODUCT1400Quality Certification'
+        'isoName': 'PRODUCT1400质量认证'
       }, function () {
         show();
       });
@@ -336,7 +344,7 @@ $(function () {
 
     $('.img_s1').dblclick(function () {
       $.post('isoManageAction!updateISODevelopedStatusToZero.action?rnd=' + Math.random(), {
-        'isoName': 'PRODUCT9000Quality Certification'
+        'isoName': 'PRODUCT9000质量认证'
       }, function () {
         show();
       });
@@ -344,7 +352,7 @@ $(function () {
 
     $('.img_s2 ').dblclick(function () {
       $.post('isoManageAction!updateISODevelopedStatusToZero.action?rnd=' + Math.random(), {
-        'isoName': 'PRODUCT1400Quality Certification'
+        'isoName': 'PRODUCT1400质量认证'
       }, function () {
         show();
       });
@@ -356,7 +364,7 @@ $(function () {
       $(createImgS1).clone(true).appendTo('.small_div1');
 
       $.post('isoManageAction!updateISODevelopedStatusToOne.action?rnd=' + Math.random(), {
-        'isoName': 'PRODUCT9000Quality Certification'
+        'isoName': 'PRODUCT9000质量认证'
       }, function () {
         show();
       });
@@ -368,7 +376,7 @@ $(function () {
       $(createImgS2).clone(true).appendTo('.small_div2');
 
       $.post('isoManageAction!updateISODevelopedStatusToOne.action?rnd=' + Math.random(), {
-        'isoName': 'PRODUCT1400Quality Certification'
+        'isoName': 'PRODUCT1400质量认证'
       }, function () {
         show();
       });

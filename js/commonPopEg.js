@@ -51,13 +51,8 @@ $(function () {
 	    center_title.empty();
 	    center_title.css('background', '#12385F');
 	    exit.css('background', '#355A87');
-<<<<<<< HEAD
-	    // myDiv.empty().text("Whether to confirm the next cycle？").addClass("popupFont");
-	    myDiv.empty().append('<p class=\'common popupFont font_color\'>Whether to confirm the next cycle？</p><p class=\'enter_p2 common\'><input type=\'button\' value=\'sure\' class=\'sureBtn common_1 common_bgcolor common_border common_color\' /></p>');
-=======
-	    // myDiv.empty().text("是否确认进入下一周期？").addClass("popupFont");
+
 	    myDiv.empty().append('<p class=\'common popupFont font_color\'>Whether to confirm the next cycle？</p><p class=\'enter_p2 common\'><input type=\'button\' value=\'confirm\' class=\'sureBtn common_1 common_bgcolor common_border common_color\' /></p>');
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
 	    popupShow();
 	    $(myDiv).on('click', '.sureBtn', function () {
       window.parent.location.href = '../mainframework/forwardloadingpageEg.html';
@@ -80,7 +75,15 @@ $(function () {
 	        var factoryType = $(myDiv).find('select[name=\'factoryType\'] option:selected').text();
 		    var place = $(myDiv).find('select[name=\'factoryLocation\'] option:selected').text();
 		    // alert(factoryType);
-		    $.post('factoryAction!addNewFactory.action', {'factoryType': factoryType, 'place': place}, function () {
+            //后台转换成中文请求参数
+            var factoryType_java;
+            switch (factoryType){
+                case 'Large plant':
+                    factoryType_java = '大厂房';break;
+                case 'Small factory':
+                    factoryType_java = '小厂房';break;
+            }
+		    $.post('factoryAction!addNewFactory.action', {'factoryType': factoryType_java, 'place': place}, function () {
 		    	update('factoryAction!getAllFactoryAndProductLine.action?rnd=' + Math.random(), null, backUp1, backUp3);
 		    	fullbg.hide();
       dialog.hide();
@@ -165,7 +168,19 @@ $(function () {
    if (lineType == 'Please select the type of production line') { alert(lineType); }   else {
      fullbg.hide(); // 点击alert确定后关闭弹窗
      dialog.hide();
-     $.post('productLineAction!addProductLine.action?rnd=' + Math.random(), {'lineType': lineType, 'factoryId': factoryId, 'productName': linePro}, function () {
+     //对应了中文的请求参数
+     var lineType_java = '手工生产线';
+     switch (lineType){
+         case 'Manual production line':
+             lineType_java = '手工生产线'; break;
+         case 'Semi - automatic production line':
+             lineType_java = '半自动生产线'; break;
+         case 'Automatic production line':
+             lineType_java = '全自动生产线'; break;
+         case 'Flexible production line':
+             lineType_java = '柔性生产线'; break;
+     }
+     $.post('productLineAction!addProductLine.action?rnd=' + Math.random(), {'lineType': lineType_java, 'factoryId': factoryId, 'productName': linePro}, function () {
        update('factoryAction!getAllFactoryAndProductLine.action?rnd=' + Math.random(), null, backUp1, backUp3);
      });
      alert('New production line success');
@@ -189,11 +204,7 @@ $(function () {
         $(tar).find('td').eq(0).text(data[index].chooseID);
         $(tar).find('td').eq(1).text(data[index].marketName);
         $(tar).find('td').eq(2).text(data[index].productName);
-<<<<<<< HEAD
-        $(tar).find('td').eq(3).append('<button class=\'over\'>End</button>');
-=======
         $(tar).find('td').eq(3).append('<button class=\'over\'>over</button>');
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
         $(this).parents('tr').fadeOut(500);
       });
       $(myDiv).find('.over').on('click', function () {
@@ -207,19 +218,11 @@ $(function () {
             parent.find('body').css('overflow', 'scroll');
             if (data == 'true') {
               changeMenu(4);
-<<<<<<< HEAD
               loadPage('start_selectOverEg.html');
               chartRoomShow();
               return;
             }
             loadPage('start_choseOrderEg.html');
-=======
-              loadPage('start_selectOverEg.html');
-              chartRoomShow();
-              return;
-            }
-            loadPage('start_choseOrderEg.html');
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
           });
         } else {
           return;
@@ -229,22 +232,16 @@ $(function () {
 
 
     myDiv.find('.overAll').click(function () {
-<<<<<<< HEAD
-	 var ok = confirm('Whether to end the market?\nTips: the end of the current market after this quarter of the end of the order at the same time');
-=======
+
 	 var ok = confirm('Whether to end the market?\n Tips: the end of the current market after this quarter of the end of the order at the same time');
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
       if (ok) {
 	    fullbg.hide();
         dialog.hide();
         parent.find('body').css('overflow', 'scroll');
 		  // 结束所有选单，跳到第五步
 		  changeMenu(4);
-<<<<<<< HEAD
+
         loadPage('start_selectOverEg.html');
-=======
-        loadPage('start_selectOverEg.html');
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
         chartRoomShow();
         $.get('chooseOrderAction!endAllMarketAndProduct.action?rnd=' + Math.random());
       } else {
@@ -255,11 +252,8 @@ $(function () {
       fullbg.hide();
       dialog.hide();
       parent.find('body').css('overflow', 'scroll');
-<<<<<<< HEAD
+
       loadPage('start_choseOrderEg.html');
-=======
-      loadPage('start_choseOrderEg.html');
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
     });
   }
 
@@ -315,11 +309,8 @@ $(function () {
 	    center_title.empty().text('New plant');
 	    center_title.css('background', '#12385F');
 	    exit.css('background', '#355A87');
-<<<<<<< HEAD
+
 	    myDiv.empty().load('newFactoryEg.html', null, function () {
-=======
-	    myDiv.empty().load('newFactoryEg.html', null, function () {
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
 		    newFactory();
       popupShow();
     });
@@ -332,11 +323,8 @@ $(function () {
 	    center_title.empty().text('Rent the plant');
 	    center_title.css('background', '#12385F');
 	    exit.css('background', '#355A87');
-<<<<<<< HEAD
 	    myDiv.empty().load('newRentEg.html', null, function () {
-=======
-	    myDiv.empty().load('newRentEg.html', null, function () {
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
+// >>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
 		    newRent();
       popupShow();
     });
@@ -350,11 +338,9 @@ $(function () {
 	    var lineCount = $dl.find('.currentLine').text();  // 现有生产线数量
     var totalLine = $dl.find('.totalLine').text();  // 能容纳生产线数量
 		// 生产线是否可以新建
-<<<<<<< HEAD
-    if (status == 'Rented' && finishBuild != 'Rental plant available') { alert('Wait cycle is not over and can not increase production line'); }		else if (lineCount == totalLine) {
-=======
+
     if (status == 'Renting' && finishBuild != 'Rental plant available') { alert('Wait cycle is not over and can not increase production line'); }		else if (lineCount == totalLine) {
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
+// >>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
       alert('The plant can accommodate the production line is full');
     }		else {
       factoryId = $(this).parents('dt').siblings('.workshop_id ').find('span').text();  // 厂房编号
@@ -362,11 +348,9 @@ $(function () {
       center_title.empty().text('New production line');
       center_title.css('background', '#12385F');
       exit.css('background', '#355A87');
-<<<<<<< HEAD
+
       myDiv.empty().load('newLineEg.html', null, function () {
-=======
-      myDiv.empty().load('newLineEg.html', null, function () {
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
+// >>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
         newLine();
         popupShow();
       });
@@ -379,11 +363,9 @@ $(function () {
 	    center_title.empty().text('View the order information');
 	    center_title.css('background', '#12385F');
 	    exit.css('background', '#355A87');
-<<<<<<< HEAD
+
 	    myDiv.empty().load('start_checkOrderEg.html', null, function () {
-=======
-	    myDiv.empty().load('start_checkOrderEg.html', null, function () {
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
+// >>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
 		    overOrder();
 		    popupShow();
     });
@@ -395,11 +377,9 @@ $(function () {
 	    center_title.empty().text('View all order information');
 	    center_title.css('background', '#12385F');
 	    exit.css('background', '#355A87');
-<<<<<<< HEAD
+
 	    myDiv.empty().load('start_checkAllOrderEg.html', null, function () {
-=======
-	    myDiv.empty().load('start_checkAllOrderEg.html', null, function () {
->>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
+// >>>>>>> f43aff42123675570b35719bc0a06ae284306d3d
 		    overAllOrder();
 		    popupShow();
     });

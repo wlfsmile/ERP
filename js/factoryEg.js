@@ -6,69 +6,69 @@ function Line(data, target, lines, index, i, num) {
   // Calculate the production line picture
   $(target).find('.lineType img').attr('src', '../../images/factory/' + num + '.jpg');
   // Production line type
-  $(target).find('.lineType span').text(lines[i].productLineType);
+  $(target).find('.lineType span').text(toEnglishProductLine(lines[i].productLineType));
 
   // Production line status
   var status = +lines[i].status;
   var str = '';
 
   if (status === 0 || status === 1) {
-    // The production line has completed the installation cycle
-    $(target).find('.finishedPeriod').html('Completed cycle：<span>' + lines[i].finishPeriod + '</span>');
-    $(target).find('.workingPro').html('Will produce the product：<span>' + lines[i].productName + '</span>');
-    if (status === 0) {
-      str = 'Installing';
-      $(target).find('.lineStatus span').text(str);
-    } else {
-      str = 'Pause the installation';
-      $(target).find('.lineStatus span').text(str);
-    }
+      // The production line has completed the installation cycle
+      $(target).find('.finishedPeriod').html('Completedcycle：<span>' + lines[i].finishPeriod + '</span>');
+      $(target).find('.workingPro').html('Willproduct ：<span>' + lines[i].productName + '</span>');
+      if (status === 0) {
+          str = 'Installing';
+          $(target).find('.lineStatus span').text(str);
+      } else {
+          str = 'stopI';
+          $(target).find('.lineStatus span').text(str);
+      }
   } else if (status === 2 || status === 3 || status === 4) {
-    // The product has a production cycle
-    $(target).find('.finishedPeriod').html('Production cycle：<span>' + lines[i].productFinishPeriod + '</span>');
+      // The product has a production cycle
+      $(target).find('.finishedPeriod').html('ProductCycle : <span>' + lines[i].productFinishPeriod + '</span>');
 
-    if (status === 2) {
-      str = 'Is producing';
-      $(target).find('.lineStatus span').text(str);
+      if (status === 2) {
+          str = 'producing';
+          $(target).find('.lineStatus span').text(str);
 
-      // Is producing products
-      $(target).find('.workingPro').html(str + 'product：<span>' + lines[i].productName + '</span>');
-    } else if (status === 3) {
-      str = 'stop production';
-      $(target).find('.lineStatus span').text(str);
+          // Is producing products
+          $(target).find('.workingPro').html(str + '<span> : ' + lines[i].productName + '</span>');
+      } else if (status === 3) {
+          str = 'stopP';
+          $(target).find('.lineStatus span').text(str);
 
-      // Is producing products
-      $(target).find('.workingPro').html(str + 'product：<span>' + lines[i].productName + '</span>');
-    } else if (status === 4) {
-      str = 'To be produced';
-      $(target).find('.lineStatus span').text(str);
+          // Is producing products
+          $(target).find('.workingPro').html(str + 'product : <span>' + lines[i].productName + '</span>');
+      } else if (status === 4) {
+          str = 'Ready';
+          $(target).find('.lineStatus span').text(str);
 
-      // product
-      $(target).find('.workingPro').html(str + 'product：<span>' + lines[i].productName + '</span>');
+          // product
+          $(target).find('.workingPro').html(str + 'product : <span>' + lines[i].productName + '</span>');
 
-      //Can click on conversion
-      $(target).find('input[name="changePro"]').css('cursor', 'pointer').removeAttr('disabled');
+          //Can click on conversion
+          $(target).find('input[name="changePro"]').css('cursor', 'pointer').removeAttr('disabled');
 
-      // This state can be sold
-      $(target).find('input[name="sell"]').css('cursor', 'pointer').removeAttr('disabled');
-    }
+          // This state can be sold
+          $(target).find('input[name="sell"]').css('cursor', 'pointer').removeAttr('disabled');
+      }
   } else if (status === 5 || status === 6) {
-    // Production line has been completed conversion cycle
-    $(target).find('.finishedPeriod').html('Has been transferred to the cycle：<span>' + lines[i].finishPeriod + '</span>');
+      // Production line has been completed conversion cycle
+      $(target).find('.finishedPeriod').html('transferredCycle：<span>' + lines[i].finishPeriod + '</span>');
 
-    if (status === 5) {
-      str = 'Is converting';
-      $(target).find('.lineStatus span').text(str);
+      if (status === 5) {
+          str = 'converting';
+          $(target).find('.lineStatus span').text(str);
 
-      // product
-      $(target).find('.workingPro').html(str + 'product：<span>' + lines[i].productName + '</span>');
-    } else {
-      str = 'Suspension of conversion';
-      $(target).find('.lineStatus span').text(str);
+          // product
+          $(target).find('.workingPro').html(str + 'product : <span>' + lines[i].productName + '</span>');
+      } else {
+          str = 'StopC';
+          $(target).find('.lineStatus span').text(str);
 
-      // product
-      $(target).find('.workingPro').html(str + 'product：<span>' + lines[i].productName + '</span>');
-    }
+          // product
+          $(target).find('.workingPro').html(str + 'product : <span>' + lines[i].productName + '</span>');
+      }
   } else return;
 
   //Store the production line number
@@ -97,13 +97,13 @@ function update(url, oData, backUp1, backUp3) {
         var factoryEach = data.factoryMade[index];
         $(tar).find('.shop').attr('src', '../../images/factory/made.jpg');
         // status
-        $(tar).find('.status span').text(factoryEach.status);
+        $(tar).find('.status span').text(toFactoryEnglishStatus(factoryEach.status));
         //Plant number
         $(tar).find('.workshop_id span').text(factoryEach.factoryId);
         // Where the market
-        $(tar).find('.market_area span').text(factoryEach.place);
+        $(tar).find('.market_area span').text(toEnglishMarket(factoryEach.place));
         //Plant type
-        $(tar).find('.workshop_type span').text(factoryEach.factoryType);
+        $(tar).find('.workshop_type span').text(toFactoryEnglish(factoryEach.factoryType));
         // Residual value
         $(tar).find('.restvalue span').text(factoryEach.sellPrice);
         // opening hour
@@ -176,24 +176,24 @@ function update(url, oData, backUp1, backUp3) {
         var factoryEach = data.factoryRent[index];
         $(tar).find('.shop').attr('src', '../../images/factory/rent.jpg');
         // status
-        $(tar).find('.status span').text(factoryEach.status);
+        $(tar).find('.status span').text(toFactoryEnglishStatus(factoryEach.status));
         // Plant number
         $(tar).find('.workshop_id span').text(factoryEach.factoryId);
         // Where the market
-        $(tar).find('.market_area span').text(factoryEach.place);
+        $(tar).find('.market_area span').text(toEnglishMarket(factoryEach.place));
         // Plant type
-        $(tar).find('.workshop_type span').text(factoryEach.factoryType);
-        $(tar).find('.restvalue p').text('Each need to pay the rent');
+        $(tar).find('.workshop_type span').text(toFactoryEnglish(factoryEach.factoryType));
+        $(tar).find('.restvalue p').text('pay rent');
         // Each need to pay the rent
         $(tar).find('.restvalue span').text(factoryEach.rentCost);
         // 残值
-        $(tar).find('.buildtime p').text('Residual value');
+        $(tar).find('.buildtime p').text('Residual');
         $(tar).find('.buildtime span').text(factoryEach.sellPrice);
         // Wait for 0 to be available
         if (+factoryEach.needPeriod === 0) {
           $(tar).find('.finished').text('Rental plant available');
         } else {
-          $(tar).find('.builttime p').text('Waiting for the use of the cycle');
+          $(tar).find('.builttime p').text('Waiting cycle');
           //Waiting for the use of the cycle
           $(tar).find('.finished').text(factoryEach.needPeriod);
         }
@@ -235,20 +235,20 @@ function update(url, oData, backUp1, backUp3) {
         var tar = $('.workshop dl').eq(index + factoryMadeNum + factoryRentNum);
         var factoryEach = data.factoryMaking[index];
         $(tar).find('.shop').attr('src', '../../images/factory/making.jpg');
-        $(tar).find('.status span').text(factoryEach.status);  // status
+        $(tar).find('.status span').text(toFactoryEnglishStatus(factoryEach.status));  // status
         $(tar).find('.workshop_id span').text(factoryEach.factoryId);  //Plant number
-        $(tar).find('.market_area span').text(factoryEach.place);  // Plant type
-        $(tar).find('.workshop_type span').text(factoryEach.factoryType);  // type
-        $(tar).find('.paytype span').text(factoryEach.payMode);  //payment method
+        $(tar).find('.market_area span').text(toEnglishMarket(factoryEach.place));  // Plant type
+        $(tar).find('.workshop_type span').text(toFactoryEnglish(factoryEach.factoryType));  // type
+        $(tar).find('.paytype span').text(toEnglishPayMode(factoryEach.payMode));  //payment method
         $(tar).find('.buildtime span').text(factoryEach.beginTime);  // opening hour
         $(tar).find('.builttime span').text(factoryEach.finishedPeriod);  // The construction cycle has been completed
         $(tar).find('.buildPerioud span').text(factoryEach.makePeriod);  //Total construction period
         $(tar).find('.lines span').text(factoryEach.capacity);  // Can accommodate the production line
-        if (factoryEach.status === 'In construction') {
-          $(tar).find('.operateFactory input').val('Suspension of construction');
+        if (factoryEach.status === 'construction') {
+          $(tar).find('.operateFactory input').val('Suspension');
           $(tar).find('.operateFactory input').removeClass('building').addClass('stopping');
         } else {
-          $(tar).find('.operateFactory input').val('Continue to build');
+          $(tar).find('.operateFactory input').val('build');
           $(tar).find('.operateFactory input').removeClass('stopping').addClass('building');
         }
       });
@@ -281,19 +281,19 @@ function updateLine(url, oData, target) {
       break;
     }
     case 1: {
-      str = 'Pause the installation';
+      str = 'Pause';
       break;
     }
     case 2: {
-      str = 'Is producing';
+      str = 'producing';
       break;
     }
     case 3: {
-      str = 'stop production';
+      str = 'stop';
       break;
     }
     case 4: {
-      str = 'To be produced';
+      str = 'Ready';
 
       // The conversion button can be clicked
       $(zhuanchan)
@@ -307,21 +307,22 @@ function updateLine(url, oData, target) {
       break;
     }
     case 5: {
-      str = 'Is converting';
+      str = 'converting';
       $(zhuanchan).attr('disabled', 'true');
       break;
     }
     case 6: {
-      str = 'Suspension of conversion';
+      str = 'Suspension';
       break;
     }
     default: break;
     }
-    $(target).parents('dd').find('.lineType span').text(data.productLineType);  // Types of
+    $(target).parents('dd').find('.lineType span').text(toEnglishProductLine(data.productLineType));  // Types of
     $(target).parents('dd').find('.finishedPeriod span').text(data.productFinishPeriod);  // Completed cycle
     $(target).parents('dd').find('.lineStatus span').text(str);  // Production line status
-    $(target).parents('dd').find('.workingPro').html(str + 'product：<span>' + data.productName + '</span>');  // product name
+    $(target).parents('dd').find('.workingPro').html('product : <span>' + data.productName + '</span>');  // product name
     $(target).parents('dd').find('input[name=\'hiddenStatus\']').val(data.status);  // line status
+      console.log(data.status);
     $('.configure p:eq(' + data.status + ')').show();
     $('.configure p:lt(' + data.status + ')').hide();
     $('.configure p:gt(' + data.status + ')').hide();
@@ -403,27 +404,27 @@ $(function () {
       // 加载信息
       var status = +data.status;
       if (status === 0 || status === 1) {
-        $('.lineInfo1 .p1').text('From the installation is still worse ' + (data.setupPeriod - data.finishPeriod) + ' cycle').css('font-weight', 'bold');
-        $('.lineInfo1 .p2').text('Need to install the cycle：' + data.setupPeriod);
-        $('.lineInfo1 .p3').text('Install the cost per installment：' + data.setupPeriodPrice);
+        $('.lineInfo1 .p1').text('install still worse ' + (data.setupPeriod - data.finishPeriod) + ' cycle').css('font-weight', 'bold');
+        $('.lineInfo1 .p2').text('install cycle：' + data.setupPeriod);
+        $('.lineInfo1 .p3').text('Install cost per install：' + data.setupPeriodPrice);
         $('.lineInfo2 .p1').text('Productivity：' + data.producePeriod);
-        $('.lineInfo2 .p2').text('Amount of residual value：' + data.sellPrice);
+        $('.lineInfo2 .p2').text('Amount of residual：' + data.sellPrice);
         $('.lineInfo2 .p3').text('The maintenance fee for each period after the start of the production line：' + data.mainCost);
         $('.lineInfo2 .p4').text('The depreciation fee for each period after the start of the production line：' + data.depreciation);
         $('.lineInfo2 .p5').text('After the sale of the production line to the account of the account period：' + data.delayTime);
       } else if (status === 2 || status === 3 || status === 4) {
         $('.lineInfo1 .p1').text('From the completion of production is still worse' + (data.producePeriod - data.productFinishPeriod) + 'cycle').css('font-weight', 'bold');
         $('.lineInfo2 .p1').text('Productivity：' + data.producePeriod);
-        $('.lineInfo2 .p2').text('Amount of residual value：' + data.sellPrice);
+        $('.lineInfo2 .p2').text('Amount of residual：' + data.sellPrice);
         $('.lineInfo2 .p3').text('The maintenance fee for each period after the start of the production line：' + data.mainCost);
         $('.lineInfo2 .p4').text('The depreciation fee for each period after the start of the production line：' + data.depreciation);
         $('.lineInfo2 .p5').text('After the sale of the production line to the account of the account period：' + data.delayTime);
       } else if (status === 5 || status === 6) {
-        $('.lineInfo1 .p1').text('From the turn into production ' + data.productName + ' Product production line');
+        $('.lineInfo1 .p1').text('turn into product ' + data.productName + ' Productline');
         $('.lineInfo1 .p2').text('Worse' + (data.changePeriod - data.finishPeriod) + 'cycle');
-        $('.lineInfo1 .p3').text('Conversion costs per period：' + data.changeCost);
+        $('.lineInfo1 .p3').text('costs per period：' + data.changeCost);
         $('.lineInfo2 .p1').text('Productivity：' + data.producePeriod);
-        $('.lineInfo2 .p2').text('Amount of residual value：' + data.sellPrice);
+        $('.lineInfo2 .p2').text('Amount of residual：' + data.sellPrice);
         $('.lineInfo2 .p3').text('The maintenance fee for each period after the start of the production line：' + data.mainCost);
         $('.lineInfo2 .p4').text('The depreciation fee for each period after the start of the production line：' + data.depreciation);
         $('.lineInfo2 .p5').text('After the sale of the production line to the account of the account period：' + data.delayTime);
@@ -464,7 +465,7 @@ $(function () {
       $('select[name="choosePro"]').empty();
 
       for (var i = 0; i < data.length; i++) {
-        $('select[name="choosePro"]').append('<option>' + data[i].productName + '</option>');
+        $('select[name="choosePro"]').append('<option> : ' + data[i].productName + '</option>');
       }
     }, 'json');
 
@@ -558,9 +559,27 @@ $(function () {
   // 点击配置下的按钮，传生产线ID、和要改变的状态
   $(document).on('click', '.configure input', function () {
     var str = $(this).val();
+    //发送给后台的请求参数
+    var str_java;
+    switch (str){
+        case 'stop' :
+          str_java = '暂停生产';break;
+        case 'production':
+          str_java = '恢复生产';break;
+        case 'Ready' :
+          str_java = '开始生产';break;
+        case 'Pause' :
+          str_java = '暂停安装';break;
+        case 'installation':
+          str_java = '恢复安装';break;
+        case 'Suspension':
+          str_java = '暂停转产';break;
+        case 'conversion':
+          str_java = '恢复转产';break;
+    }
     updateLine('productLineAction!allConfigOperate.action', {
       'productLineId': lineId,
-      'status': str
+      'status': str_java
     }, _thisLine);
   });
 
@@ -583,7 +602,9 @@ $(function () {
       $(this).parents('dd').hide(1000);
       currentLine = $(this).parents('dl').find('.currentLine');
       $(currentLine).text($(currentLine).text() - 1);
-    } else { return false; }
+    } else {
+      return false;
+    }
   });
 
 	// 出售、停止租用、停止修建、继续修建按钮样式
@@ -628,13 +649,13 @@ $(function () {
 	// 停止修建、继续修建
   $(document).on('click', '.building, .stopping', function () {
     var factoryId = $(this).parents('dl').find('.workshop_id span').text();  // 厂房编号
-    if ($(this).val().trim() === 'Suspension of construction') {
-      $(this).val('Continue to build');
+    if ($(this).val().trim() === 'Suspension') {
+      $(this).val('build');
 		  $(this).parents('dl').find('.status span').text('Suspended');
 		  $.post('factoryAction!stopFactoryMaking.action', {'factoryId': factoryId});  // 成功暂停、继续传--厂房ID
-    } else if ($(this).val().trim() === 'Continue to build') {
-      $(this).val('Suspension of construction');
-      $(this).parents('dl').find('.status span').text('In construction');
+    } else if ($(this).val().trim() === 'build') {
+      $(this).val('Suspension');
+      $(this).parents('dl').find('.status span').text('construction');
       $.post('factoryAction!startFactoryMaking.action', {'factoryId': factoryId});  // 成功暂停、继续传--厂房ID
     }
 		// else return false;
@@ -643,3 +664,62 @@ $(function () {
 
   update('factoryAction!getAllFactoryAndProductLine.action', null, backUp1, backUp3);
 });
+
+function toFactoryEnglish(factoryType){
+  switch (factoryType){
+      case '大厂房':
+        return 'Large Factory';
+      case '小厂房':
+          return 'Small Factory';
+  }
+  return factoryType;
+}
+
+function toFactoryEnglishStatus(status) {
+    switch (status){
+        case '已建成':
+          return 'Finished';
+        case '修建中' :
+          return 'Building';
+        case '租用中' :
+          return 'Rent';
+    }
+    return status;
+}
+
+function toEnglishMarket(market){
+  switch (market){
+      case '本地市场' :
+        return 'Local Market';
+      case '区域市场' :
+        return 'Regional market';
+      case '亚洲市场' :
+        return 'Asia market';
+      case '国内市场' :
+        return 'Domestic market';
+      case '国际市场' :
+        return 'international market';
+  }
+}
+
+function toEnglishPayMode(payMode) {
+    switch (payMode){
+        case '按期支付建造资金' :
+          return 'Pay the construction fund on schedule';
+    }
+    return payMode;
+}
+
+function toEnglishProductLine(line){
+  switch (line){
+      case '手工生产线':
+        return 'Manual';
+      case '半自动生产线':
+        return 'Semi auto';
+      case '全自动生产线':
+        return 'Automatic';
+      case '柔性生产线' :
+        return 'Flexible';
+  }
+  return line;
+}
